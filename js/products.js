@@ -2,7 +2,8 @@ const DATA_URL = "https://japceibal.github.io/emercado-api/cats_products/101.jso
 
 const container = document.getElementByClassName("container"); 
 
-fetch(DATA_URL)
+
+/*fetch(DATA_URL)
 .then(function (response) {
   return response.json();
 })
@@ -14,6 +15,5 @@ fetch(DATA_URL)
   console.log(error);
 });
 
-/* arreglar
 
 
