@@ -1,11 +1,15 @@
+function isAuthenticated() {
+  return localStorage.getItem('authenticated') === 'true';
+}
+
 function authenticate() {
-    var username = document.getElementById("username").value;
-    var password = document.getElementById("password").value;
+  const username = document.getElementById('username').value;
+  const password = document.getElementById('password').value;
+
+  if (username && password) {
   
-    if (username === "" || password === "") {
-      alert("Por favor, completa ambos campos.");
-    } else {
-      window.location.href = "index.html";
-    }
+    localStorage.setItem('authenticated', 'true'); 
+    window.location.href = 'index.html'; 
+    alert('Por favor ingrese un usuario y contraseña válidos.');
   }
-  
+}
