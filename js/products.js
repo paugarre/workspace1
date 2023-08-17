@@ -1,55 +1,29 @@
-/*const DATA_URL = "https://japceibal.github.io/emercado-api/cats_products/101.json"; 
+const productosDiv = document.getElementById("listaDeAutos");
+document.addEventListener('DOMContentLoaded', function() {
+  const carsData = "https://japceibal.github.io/emercado-api/cats_products/101.json"; 
 
-const container = document.getElementByClassName("container"); 
-
-/*function showProducts(productsArray) {
-  for (const product of productsArray) {
-      const productDiv = document.createElement("div");
-      productDiv.classList.add("product");
-
-      const productImage = document.createElement("img");
-      productImage.src = product.image;
-      productDiv.appendChild(productImage);
-
-      const productName = document.createElement("h2");
-      productName.textContent = product.name;
-      productDiv.appendChild(productName);
-
-      const productDescription = document.createElement("p");
-      productDescription.textContent = product.description;
-      productDiv.appendChild(productDescription);
-
-      const productPrice = document.createElement("p");
-      productPrice.textContent = `Precio: ${product.price}`;
-      productDiv.appendChild(productPrice);
-
-      const productSold = document.createElement("p");
-      productSold.textContent = `Vendidos: ${product.sold}`;
-      productDiv.appendChild(productSold);
-
-      container.appendChild(productDiv);
-  }
-}
-
-fetch(API_URL)
-  .then(response => response.json())
-  .then(data => {
-      const products = data.products;
-      showProducts(products);
-  })
-  .catch(error => console.error("Error:", error));
-
-fetch(DATA_URL)
-.then(function (response) {
-  return response.json();
-})
-.then(function (data) {
-  console.log(data.students);
-  showData(data.students)
-})
-.catch(function (error) {
-  console.log(error);
+  fetch(carsData)
+    .then(response => response.json())
+    .then(data => {
+      data.products.forEach(products => {
+        productosDiv.innerHTML += `
+          <div class="row list-group-item d-flex justify-content-between">
+            <div class="col-3">
+              <img src="${products.image}" alt="${products.name}" class="img-thumbnail">
+            </div>
+            <div class="col-7">
+              <h3>${products.name}</h3>
+              <p>${products.description}</p>
+            </div>
+            <div class="col-2">
+              <small>
+                ${products.soldCount}
+              </small>
+            </div>
+          </div>`;
+      });
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
 });
-
-
-
