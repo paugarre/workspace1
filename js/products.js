@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', function() {
             </div>
             <div class="col-2">
               <small>
-                ${products.soldCount} unidades
+                ${products.soldCount} vendidos
               </small>
             </div>
           </div>`;
