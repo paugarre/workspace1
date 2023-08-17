@@ -12,16 +12,17 @@ document.addEventListener('DOMContentLoaded', function() {
               <img src="${products.image}" alt="${products.name}" class="img-thumbnail">
             </div>
             <div class="col-7">
-              <h3>${products.name}</h3>
+              <h3>${products.name} - ${products.currency} ${products.cost}</h3>
               <p>${products.description}</p>
             </div>
             <div class="col-2">
               <small>
-                ${products.soldCount}
+                ${products.soldCount} unidades
               </small>
             </div>
           </div>`;
       });
+
     })
     .catch(error => {
       console.error('Error:', error);
