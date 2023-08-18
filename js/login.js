@@ -11,13 +11,7 @@ function authenticate() {
   }
 }
 
-// Verificar la autenticación al cargar la página
-window.addEventListener('load', function() {
-  if (!isAuthenticated()) {
 
-    window.location.href = 'login.html';
-  }
-});
 
 function isAuthenticated() {
   return localStorage.getItem('authenticated') === 'true';
