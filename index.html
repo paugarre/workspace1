@@ -91,6 +91,14 @@
   <script src="js/bootstrap.bundle.min.js"></script>
   <script src="js/index.js"></script>
   <script src="js/init.js"></script>
+  <script>
+
+    window.onload = function() {
+      if (!isAuthenticated()) {
+        window.location.href = 'login.html'; 
+      }
+    };
+  </script>
 </body>
 
 </html>
