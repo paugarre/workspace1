@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", function() {
   if (!isAuthenticated()) {
     // Si no estamos autenticados, redirigimos al formulario de inicio de sesión
     window.location.href = "login.html";
+    alert("Debe ingresar para poder continuar")
   }
 
   document.getElementById("autos").addEventListener("click", function() {
