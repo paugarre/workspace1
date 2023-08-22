@@ -38,10 +38,11 @@ document.addEventListener("DOMContentLoaded", function() {
   usernameDisplay.classList.add("nav-link");
 
   if (isAuthenticated()) {
-      const savedUsername = localStorage.getItem("username");
-      if (savedUsername) {
-          usernameDisplay.textContent = `${savedUsername}`;
-          document.querySelector(".navbar-nav").appendChild(usernameDisplay);
-      }
+    const savedUsername = localStorage.getItem("username");
+    if (savedUsername) {
+      usernameDisplay.textContent = `Hola, ${savedUsername}`; // Modificado para incluir el saludo
+      document.querySelector(".navbar-nav").appendChild(usernameDisplay);
+    }
   }
-});  //aca se repite la misma funcion para que aparezca en products.html el nombre de usuario, no se si funciona bien poniendo solo el evento pero dejo la funcion de IsAuthenticated por las dudas
+});
+
