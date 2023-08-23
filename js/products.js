@@ -1,4 +1,6 @@
 const productosDiv = document.getElementById("listaDeAutos");
+const searchInput = document.getElementById('searchInput');
+
 document.addEventListener('DOMContentLoaded', function() {
   const catID = localStorage.getItem("catID"); // Obtener el ID de categoría almacenado
   const productsData = `https://japceibal.github.io/emercado-api/cats_products/${catID}.json`;
@@ -6,45 +8,52 @@ document.addEventListener('DOMContentLoaded', function() {
   fetch(productsData)
     .then(response => response.json())
     .then(data => {
-      data.products.forEach(products => {
-        productosDiv.innerHTML += `
-          <div class="row list-group-item d-flex justify-content-between">
+      const productos = data.products; // Obtener los productos del JSON
+
+      // Función para filtrar productos por nombre y descripción
+      function filtrarProductos(terminoBusqueda) {
+        return productos.filter(producto =>
+          producto.name.toLowerCase().includes(terminoBusqueda.toLowerCase()) ||
+          producto.description.toLowerCase().includes(terminoBusqueda.toLowerCase())
+        );
+      }
+
+      // Función para mostrar los productos en la lista
+      function mostrarProductos(productosMostrados) {
+        productosDiv.innerHTML = '';
+
+        productosMostrados.forEach(producto => {
+          const productoElement = document.createElement('div');
+          productoElement.className = "row list-group-item d-flex justify-content-between";
+          productoElement.innerHTML = `
             <div class="col-3">
-              <img src="${products.image}" alt="${products.name}" class="img-thumbnail">
+              <img src="${producto.image}" alt="${producto.name}" class="img-thumbnail">
             </div>
             <div class="col-7">
-              <h3>${products.name} - ${products.currency} ${products.cost}</h3>
-              <p>${products.description}</p>
+              <h3>${producto.name} - ${producto.currency} ${producto.cost}</h3>
+              <p>${producto.description}</p>
             </div>
             <div class="col-2">
               <small>
-                ${products.soldCount} vendidos
+                ${producto.soldCount} vendidos
               </small>
-            </div>
-          </div>`;
+            </div>`;
+          productosDiv.appendChild(productoElement);
+        });
+      }
+
+      // Agregamos el evento de escucha al campo de búsqueda
+      searchInput.addEventListener('input', event => {
+        const terminoBusqueda = event.target.value;
+        const productosFiltrados = filtrarProductos(terminoBusqueda);
+        mostrarProductos(productosFiltrados);
       });
 
+      // Mostramos los productos inicialmente
+      mostrarProductos(productos);
     })
     .catch(error => {
       console.error('Error:', error);
     });
-});
-
-
-function isAuthenticated() {
-  return localStorage.getItem("authenticated") === "true";
-}
-
-document.addEventListener("DOMContentLoaded", function() {  
-  const usernameDisplay = document.createElement("span");
-  usernameDisplay.classList.add("nav-link");
-
-  if (isAuthenticated()) {
-    const savedUsername = localStorage.getItem("username");
-    if (savedUsername) {
-      usernameDisplay.textContent = `Hola, ${savedUsername}`; // Modificado para incluir el saludo
-      document.querySelector(".navbar-nav").appendChild(usernameDisplay);
-    }
-  }
 });
 
