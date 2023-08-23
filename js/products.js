@@ -1,8 +1,9 @@
 const productosDiv = document.getElementById("listaDeAutos");
 document.addEventListener('DOMContentLoaded', function() {
-  const carsData = "https://japceibal.github.io/emercado-api/cats_products/101.json"; 
+  const catID = localStorage.getItem("catID"); // Obtener el ID de categoría almacenado
+  const productsData = `https://japceibal.github.io/emercado-api/cats_products/${catID}.json`;
 
-  fetch(carsData)
+  fetch(productsData)
     .then(response => response.json())
     .then(data => {
       data.products.forEach(products => {
@@ -28,6 +29,7 @@ document.addEventListener('DOMContentLoaded', function() {
       console.error('Error:', error);
     });
 });
+
 
 function isAuthenticated() {
   return localStorage.getItem("authenticated") === "true";
