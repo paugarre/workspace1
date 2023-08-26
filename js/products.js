@@ -1,27 +1,22 @@
 const productosDiv = document.getElementById("listaDeAutos");
 const searchInput = document.getElementById('searchInput');
+const clearRangeFilterButton = document.getElementById('clearRangeFilterButton');
+const sortAscButton = document.getElementById('sortAsc');
+const sortDescButton = document.getElementById('sortDesc');
+const sortByCountButton = document.getElementById('sortByCount');
 
-document.addEventListener('DOMContentLoaded', function() {
-  const catID = localStorage.getItem("catID"); // Obtener el ID de categoría almacenado
+document.addEventListener('DOMContentLoaded', () => {
+  const catID = localStorage.getItem("catID");
   const productsData = `https://japceibal.github.io/emercado-api/cats_products/${catID}.json`;
 
-  fetch(productsData)
-    .then(response => response.json())
-    .then(data => {
-      const productos = data.products; // Obtener los productos del JSON
+  const fetchProducts = async () => {
+    try {
+      const response = await fetch(productsData);
+      const data = await response.json();
+      const productos = data.products;
 
-      // Función para filtrar productos por nombre y descripción
-      function filtrarProductos(terminoBusqueda) {
-        return productos.filter(producto =>
-          producto.name.toLowerCase().includes(terminoBusqueda.toLowerCase()) ||
-          producto.description.toLowerCase().includes(terminoBusqueda.toLowerCase())
-        );
-      }
-
-      // Función para mostrar los productos en la lista
-      function mostrarProductos(productosMostrados) {
+      const mostrarProductos = productosMostrados => {
         productosDiv.innerHTML = '';
-
         productosMostrados.forEach(producto => {
           const productoElement = document.createElement('div');
           productoElement.className = "row list-group-item d-flex justify-content-between";
@@ -34,26 +29,54 @@ document.addEventListener('DOMContentLoaded', function() {
               <p>${producto.description}</p>
             </div>
             <div class="col-2">
-              <small>
-                ${producto.soldCount} vendidos
-              </small>
+              <small>${producto.soldCount} vendidos</small>
             </div>`;
           productosDiv.appendChild(productoElement);
         });
-      }
+      };
 
-      // Agregamos el evento de escucha al campo de búsqueda
+      const filtrarProductos = terminoBusqueda =>
+        productos.filter(producto =>
+          producto.name.toLowerCase().includes(terminoBusqueda.toLowerCase()) ||
+          producto.description.toLowerCase().includes(terminoBusqueda.toLowerCase())
+        );
+
+      const ordenarPorPrecio = (ascendente = true) =>
+        productos.sort((a, b) => (ascendente ? a.cost - b.cost : b.cost - a.cost));
+
+      const ordenarPorCantidadDesc = () =>
+        productos.sort((a, b) => b.soldCount - a.soldCount);
+
       searchInput.addEventListener('input', event => {
         const terminoBusqueda = event.target.value;
-        const productosFiltrados = filtrarProductos(terminoBusqueda);
-        mostrarProductos(productosFiltrados);
+        mostrarProductos(filtrarProductos(terminoBusqueda));
       });
 
-      // Mostramos los productos inicialmente
-      mostrarProductos(productos);
-    })
-    .catch(error => {
-      console.error('Error:', error);
-    });
-});
+      sortAscButton.addEventListener('click', () => {
+        ordenarPorPrecio();
+        mostrarProductos(productos);
+      });
 
+      sortDescButton.addEventListener('click', () => {
+        ordenarPorPrecio(false);
+        mostrarProductos(productos);
+      });
+
+      sortByCountButton.addEventListener('click', () => {
+        ordenarPorCantidadDesc();
+        mostrarProductos(productos);
+      });
+
+      clearRangeFilterButton.addEventListener('click', () => {
+        searchInput.value = '';
+        mostrarProductos(productos);
+      });
+
+      mostrarProductos(productos);
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
+
+  fetchProducts();
+});
