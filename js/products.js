@@ -34,7 +34,8 @@ document.addEventListener('DOMContentLoaded', () => {
           productosDiv.appendChild(productoElement);
         });
       };
-
+      
+    
       const filtrarProductos = terminoBusqueda =>
         productos.filter(producto =>
           producto.name.toLowerCase().includes(terminoBusqueda.toLowerCase()) ||
@@ -51,6 +52,20 @@ document.addEventListener('DOMContentLoaded', () => {
         const terminoBusqueda = event.target.value;
         mostrarProductos(filtrarProductos(terminoBusqueda));
       });
+      //Filtro por rangos
+      filtroRangoButton.addEventListener('click', () => {
+        const minPrice = minPriceInput.value;
+        const maxPrice = maxPriceInput.value;
+      
+        const productosFiltradosPorRango = filtrarPorRango(productos, minPrice, maxPrice);
+        mostrarProductos(productosFiltradosPorRango);
+      });
+      
+      const filtrarPorRango = (productos, minPrice, maxPrice) => {
+        return productos.filter(producto =>
+          producto.cost >= minPrice && producto.cost <= maxPrice
+        );
+      };
 
       sortAscButton.addEventListener('click', () => {
         ordenarPorPrecio();
@@ -69,6 +84,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
       clearRangeFilterButton.addEventListener('click', () => {
         searchInput.value = '';
+        maxPriceInput.value = '';
+        minPriceInput.value = '';
         mostrarProductos(productos);
       });
 
