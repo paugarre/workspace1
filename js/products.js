@@ -31,9 +31,21 @@ document.addEventListener('DOMContentLoaded', () => {
             <div class="col-2">
               <small>${producto.soldCount} vendidos</small>
             </div>`;
+            // Agregamos el atributo onclick al div del producto
+             productoElement.onclick = function () {
+             // Obtenemos el ID del producto desde el atributo personalizado
+             const productoId = producto.id;
+             // Redirigir a la página con los detalles, pasando el ID como parámetro
+               window.location.href = `product-info.html?id=${productoId}`;
+               };
+
+              // Agregar el atributo personalizado 'data-id' al div con el ID del producto
+                productoElement.setAttribute('data-id', producto.id);
+
           productosDiv.appendChild(productoElement);
         });
       };
+      
       
     
       const filtrarProductos = terminoBusqueda =>

@@ -189,3 +189,23 @@ a.custom-card:hover {
   color: orange;
 }
 .list-group-item{ text-align: left; color:#000000a8 };
+
+
+/* Estilo para el título de las imágenes */
+#productImages p {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+/* Estilo para los contenedores de imágenes */
+.image-container {
+  display: inline-block;
+  margin-right: 10px; /* Espacio entre las imágenes */
+}
+
+/* Estilo para las imágenes */
+.image-container img {
+  max-width: 150px; /* Ancho máximo de las imágenes */
+  cursor: pointer; /* Cambia el cursor al pasar por encima para indicar que se puede hacer clic */
+}
