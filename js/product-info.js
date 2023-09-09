@@ -91,6 +91,7 @@ async function fetchProductComments(productId) {
         const starIcon = document.createElement('i');
         starIcon.className = 'fas fa-star'; // Clase de FontAwesome para una estrella llena
         ratingStarsContainer.appendChild(starIcon);
+        starIcon.style.color = "gold";
       }
 
       commentContainer.appendChild(ratingStarsContainer);
