@@ -114,6 +114,7 @@ async function fetchProductComments(productId) {
   }
 }
 
+<<<<<<< HEAD
 // Evento de carga de la página
 document.addEventListener('DOMContentLoaded', () => {
   // Obtener el ID del producto de la URL
@@ -191,4 +192,58 @@ document.addEventListener('DOMContentLoaded', () => {
   } else {
     console.error('ID de producto no encontrado en la URL.');
   }
+=======
+// Obtener el ID del producto de la URL y cargar los detalles
+const productId = getProductIdFromURL();
+if (productId) {
+  fetchProductDetails(productId);
+  fetchProductComments(productId); // Llama a la función para cargar los comentarios
+} else {
+  console.error('ID de producto no encontrado en la URL.');
+}
+
+// comentarios
+// Evento para manejar el envío del formulario de nuevo comentario
+document.getElementById('new-comment-form').addEventListener('submit', function (event) {
+  event.preventDefault(); // Evitar el envío del formulario por defecto
+
+  // Obtener los valores del formulario
+  const username = document.getElementById('username').value;
+  const rating = document.getElementById('rating').value;
+  const commentText = document.getElementById('comment-text').value;
+
+  // Crear un nuevo comentario en el DOM
+  const newCommentContainer = document.createElement('div');
+  newCommentContainer.className = 'comment-container';
+
+  // Crear elementos para mostrar la puntuación con estrellas
+  const ratingStarsContainer = document.createElement('div');
+  ratingStarsContainer.className = 'rating-stars';
+  for (let i = 0; i < rating; i++) {
+    const starIcon = document.createElement('i');
+    starIcon.className = 'fas fa-star';
+    starIcon.style.color = 'gold';
+    ratingStarsContainer.appendChild(starIcon);
+  }
+
+  // Crear elementos para mostrar el usuario y el comentario
+  const userElement = document.createElement('p');
+  userElement.textContent = `Usuario: ${username}`;
+  const commentElement = document.createElement('p');
+  commentElement.textContent = `Comentario: ${commentText}`;
+
+  // Agregar elementos al contenedor del comentario
+  newCommentContainer.appendChild(ratingStarsContainer);
+  newCommentContainer.appendChild(userElement);
+  newCommentContainer.appendChild(commentElement);
+
+  // Agregar el nuevo comentario al contenedor de comentarios existentes
+  const commentsContainer = document.getElementById('commentsContainer'); // Ajusta el ID según tu estructura HTML
+  commentsContainer.appendChild(newCommentContainer);
+
+  // Limpiar el formulario
+  document.getElementById('username').value = '';
+  document.getElementById('rating').value = '5';
+  document.getElementById('comment-text').value = '';
+>>>>>>> 0060bb18c81b45f5217f92e288c823014b40bb6b
 });
