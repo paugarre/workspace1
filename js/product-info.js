@@ -90,15 +90,15 @@ async function fetchProductComments(productId) {
       for (let i = 0; i < comment.score; i++) {
         const starIcon = document.createElement('i');
         starIcon.className = 'fas fa-star'; // Clase de FontAwesome para una estrella llena
+        starIcon.style.color = 'gold'; // Cambiar el color de las estrellas a dorado
         ratingStarsContainer.appendChild(starIcon);
-        starIcon.style.color = "gold";
       }
 
       commentContainer.appendChild(ratingStarsContainer);
 
       // Mostrar el usuario y la fecha del comentario
       const commentInfo = document.createElement('p');
-      commentInfo.textContent = `Usuario: ${comment.user}`;
+      commentInfo.textContent = `Usuario: ${comment.user}, Fecha: ${comment.dateTime}`;
       commentContainer.appendChild(commentInfo);
 
       // Mostrar el contenido del comentario
@@ -114,11 +114,81 @@ async function fetchProductComments(productId) {
   }
 }
 
-// Obtener el ID del producto de la URL y cargar los detalles
-const productId = getProductIdFromURL();
-if (productId) {
-  fetchProductDetails(productId);
-  fetchProductComments(productId); // Llama a la función para cargar los comentarios
-} else {
-  console.error('ID de producto no encontrado en la URL.');
-}
+// Evento de carga de la página
+document.addEventListener('DOMContentLoaded', () => {
+  // Obtener el ID del producto de la URL
+  const productId = getProductIdFromURL();
+
+  if (productId) {
+    // Cargar los detalles del producto
+    fetchProductDetails(productId);
+
+    // Cargar los comentarios del producto
+    fetchProductComments(productId);
+
+    // Agregar un evento de clic al botón "Enviar Comentario"
+    const submitCommentButton = document.getElementById('submitComment');
+    submitCommentButton.addEventListener('click', () => {
+      // Obtener los valores del nuevo comentario
+      const commentRating = document.getElementById('commentRating').value;
+      const commentUser = document.getElementById('commentUser').value;
+      const commentDescription = document.getElementById('commentDescription').value;
+
+      // Validar que los campos no estén vacíos
+      if (!commentRating || !commentUser || !commentDescription) {
+        alert('Por favor, complete todos los campos del comentario.');
+        return;
+      }
+
+      // Crear un nuevo comentario
+      const newComment = {
+        score: parseInt(commentRating),
+        user: commentUser,
+        description: commentDescription,
+        dateTime: new Date().toLocaleString(),
+      };
+
+      // Agregar el nuevo comentario a la lista de comentarios y mostrarlo en la página
+      const commentsContainer = document.getElementById('commentsContainer');
+      const newCommentContainer = document.createElement('div');
+      newCommentContainer.className = 'comment-container';
+
+      // Crear un elemento para mostrar la puntuación con estrellas del nuevo comentario
+      const newCommentRatingStarsContainer = document.createElement('div');
+      newCommentRatingStarsContainer.className = 'rating-stars';
+
+      // Crear estrellas en función de la puntuación del nuevo comentario
+      for (let i = 0; i < newComment.score; i++) {
+        const starIcon = document.createElement('i');
+        starIcon.className = 'fas fa-star';
+        starIcon.style.color = 'gold';
+        newCommentRatingStarsContainer.appendChild(starIcon);
+      }
+
+      newCommentContainer.appendChild(newCommentRatingStarsContainer);
+
+      // Mostrar el usuario y la fecha del nuevo comentario
+      const newCommentInfo = document.createElement('p');
+      newCommentInfo.textContent = `Usuario: ${newComment.user}, Fecha: ${newComment.dateTime}`;
+      newCommentContainer.appendChild(newCommentInfo);
+
+      // Mostrar el contenido del nuevo comentario
+      const newCommentContent = document.createElement('p');
+      newCommentContent.textContent = `Comentario: ${newComment.description}`;
+      newCommentContainer.appendChild(newCommentContent);
+
+      // Agregar el contenedor del nuevo comentario al contenedor de comentarios principal
+      commentsContainer.appendChild(newCommentContainer);
+
+      // Limpiar los campos del formulario
+      document.getElementById('commentRating').value = '';
+      document.getElementById('commentUser').value = '';
+      document.getElementById('commentDescription').value = '';
+
+      // Scroll hasta el nuevo comentario
+      newCommentContainer.scrollIntoView({ behavior: 'smooth' });
+    });
+  } else {
+    console.error('ID de producto no encontrado en la URL.');
+  }
+});
