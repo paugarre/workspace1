@@ -139,6 +139,12 @@ document.addEventListener('DOMContentLoaded', () => {
         alert('Por favor, complete todos los campos del comentario.');
         return;
       }
+      
+      //Limitar los valores posibles de puntuación entre 1 y  5.
+      if(commentRating < 0 || commentRating > 5){
+        alert("Por favor, seleccione un valor entre 1 y 5 en el campo de puntuación.");
+        return;
+      }
 
       // Crear un nuevo comentario
       const newComment = {
