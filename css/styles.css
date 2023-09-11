@@ -221,3 +221,7 @@ a.custom-card:hover {
 .comment-container {
   margin-bottom: 20px; /* Espacio entre comentarios individuales */
 }
+#p0  { 
+  padding: 8px;
+  margin: 25px;
+}

@@ -130,8 +130,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const submitCommentButton = document.getElementById('submitComment');
     submitCommentButton.addEventListener('click', () => {
       // Obtener los valores del nuevo comentario
+      const savedUsername = localStorage.getItem("username");
       const commentRating = document.getElementById('commentRating').value;
-      const commentUser = document.getElementById('commentUser').value;
       const commentDescription = document.getElementById('commentDescription').value;
 
       // Validar que los campos no estén vacíos
@@ -143,7 +143,7 @@ document.addEventListener('DOMContentLoaded', () => {
       // Crear un nuevo comentario
       const newComment = {
         score: parseInt(commentRating),
-        user: commentUser,
+        user: savedUsername,
         description: commentDescription,
         dateTime: new Date().toLocaleString(),
       };

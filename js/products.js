@@ -6,6 +6,8 @@ const sortDescButton = document.getElementById('sortDesc');
 const sortByCountButton = document.getElementById('sortByCount');
 
 document.addEventListener('DOMContentLoaded', () => {
+  
+ 
   const catID = localStorage.getItem("catID");
   const productsData = `https://japceibal.github.io/emercado-api/cats_products/${catID}.json`;
 
