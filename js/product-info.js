@@ -135,11 +135,11 @@ document.addEventListener('DOMContentLoaded', () => {
       const commentDescription = document.getElementById('commentDescription').value;
 
       // Validar que los campos no estén vacíos
-      if (!commentRating || !commentUser || !commentDescription) {
+      if (!commentRating || !commentDescription) {
         alert('Por favor, complete todos los campos del comentario.');
         return;
       }
-      
+
       //Limitar los valores posibles de puntuación entre 1 y  5.
       if(commentRating < 0 || commentRating > 5){
         alert("Por favor, seleccione un valor entre 1 y 5 en el campo de puntuación.");
@@ -188,7 +188,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // Limpiar los campos del formulario
       document.getElementById('commentRating').value = '';
-      document.getElementById('commentUser').value = '';
+     
       document.getElementById('commentDescription').value = '';
 
       // Scroll hasta el nuevo comentario

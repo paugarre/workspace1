@@ -9,8 +9,14 @@ function isAuthenticated() {
     if (isAuthenticated()) {
         const savedUsername = localStorage.getItem("username");
         if (savedUsername) {
-            usernameDisplay.textContent = `${savedUsername}`;
+            usernameDisplay.textContent = `Hola, ${savedUsername}`;
             document.querySelector(".navbar-nav").appendChild(usernameDisplay);
         }
     }
-  }); //aca se repite la misma funcion para que aparezca en categories.html el nombre de usuario
+  }); 
+   // Verificar si el usuario está autenticado
+   if (!isAuthenticated()) {
+    // Si no estamos autenticados, redirigimos al formulario de inicio de sesión
+    window.location.href = "login.html";
+    alert("Debe ingresar para poder continuar");
+  }
