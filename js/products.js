@@ -75,11 +75,22 @@ document.addEventListener('DOMContentLoaded', () => {
         mostrarProductos(productosFiltradosPorRango);
       });
       
-      const filtrarPorRango = (productos, minPrice, maxPrice) => {
-        return productos.filter(producto =>
-          producto.cost >= minPrice || producto.cost <= maxPrice
-        );
-      };
+       const filtrarPorRango = (productos, minPrice, maxPrice) => {
+        return productos.filter(producto => {
+            if (minPrice && maxPrice) {
+                // Filtrar por ambos precios
+                return producto.cost >= minPrice && producto.cost <= maxPrice;
+            } else if (minPrice) {
+                // Filtrar solo por precio mínimo
+                return producto.cost >= minPrice;
+            } else if (maxPrice) {
+                // Filtrar solo por precio máximo
+                return producto.cost <= maxPrice;
+            }
+            // Si no se proporciona ni precio mínimo ni máximo, no se filtra nada.
+            return true;
+        });
+    };
 
       sortAscButton.addEventListener('click', () => {
         ordenarPorPrecio();
