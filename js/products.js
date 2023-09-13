@@ -77,7 +77,7 @@ document.addEventListener('DOMContentLoaded', () => {
       
       const filtrarPorRango = (productos, minPrice, maxPrice) => {
         return productos.filter(producto =>
-          producto.cost >= minPrice && producto.cost <= maxPrice
+          producto.cost >= minPrice || producto.cost <= maxPrice
         );
       };
 
