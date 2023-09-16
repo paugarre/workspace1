@@ -38,37 +38,50 @@
   </nav>
   <main class="pb-5 container">
     <div class="container">
-      <div class="container text-center p-5"> <!--p-5 sirve para el padding-->
+      <div class="container text-center p-5">
         <h1>Productos</h1>
-        <h5 style="color:#000000a8 ;">Verás aquí todos los productos de la categoría seleccionada</h5>
+        <h5 style="color:#000000a8;">Verás aquí todos los productos de la categoría seleccionada</h5>
       </div>
     </div>
     <div class="container">
       <div class="row">
-        <div class="col text-end">
-          <div class="btn-group btn-group-toggle mb-4" data-bs-toggle="buttons">
-            <input type="radio" class="btn-check" name="options" id="sortAsc">
-            <label class="btn btn-light" for="sortAsc">Menor precio</label>
-            <input type="radio" class="btn-check" name="options" id="sortDesc">
-            <label class="btn btn-light" for="sortDesc">Mayor precio</label>
-            <input type="radio" class="btn-check" name="options" id="sortByCount" checked>
-            <label class="btn btn-light" for="sortByCount"><i class="fas fa-sort-amount-down mr-1" alt="Más vendidos"></i></label>
-            <input type="search" id="searchInput" placeholder="Buscar...">
-            <input type="number" id="minPriceInput" placeholder="Precio mínimo">
-            <input type="number" id="maxPriceInput" placeholder="Precio máximo">
-            <button id="filtroRangoButton">Aplicar filtro</button>
-            <button class="btn btn-link btn-sm" id="clearRangeFilterButton">Limpiar</button>
+        <div class="col-lg-6 col-md-12 mb-4">
+          <form class="row g-3">
+            <div class="col-md-4">
+              <input type="search" class="form-control" id="searchInput" placeholder="Buscar...">
+            </div>
+            <div class="col-md-4">
+              <input type="number" class="form-control" id="minPriceInput" placeholder="Precio mínimo">
+            </div>
+            <div class="col-md-4">
+              <input type="number" class="form-control" id="maxPriceInput" placeholder="Precio máximo">
+            </div>
+            <div class="col-md-12">
+              <div class="btn-group" role="group">
+                <button type="button" class="btn btn-primary" id="filtroRangoButton">Aplicar filtro</button>
+                <button type="button" class="btn btn-link btn-sm" id="clearRangeFilterButton">Limpiar</button>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="col-lg-6 col-md-12 mb-4">
+          <div class="btn-group btn-group-toggle" data-bs-toggle="buttons">
+            <label class="btn btn-light">
+              <input type="radio" class="btn-check" name="options" id="sortAsc"> Menor precio
+            </label>
+            <label class="btn btn-light">
+              <input type="radio" class="btn-check" name="options" id="sortDesc"> Mayor precio
+            </label>
+            <label class="btn btn-light active">
+              <input type="radio" class="btn-check" name="options" id="sortByCount" checked> Más vendidos
+            </label>
           </div>
         </div>
       </div>
-      
     </div>
     <div class="container text-center list-group" id="listaDeAutos"></div>
   </main>
   <footer class="text-muted">
-    <div class="container">
-      <p class="float-end">
-        <a href="#">Volver arriba</a>
       </p>
       <p>Este sitio forma parte de <a href="https://jovenesaprogramar.edu.uy/" target="_blank">Jovenes a Programar</a></p>
     </div>
@@ -86,9 +99,7 @@
   <script src="js/init.js"></script>
   <script src="js/products.js"></script>
   <script src="js/product-info.js"></script>
-  
-  
-  
 </body>
 
 </html>
+

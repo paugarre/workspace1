@@ -23,10 +23,10 @@ document.addEventListener('DOMContentLoaded', () => {
           const productoElement = document.createElement('div');
           productoElement.className = "row list-group-item d-flex justify-content-between";
           productoElement.innerHTML = `
-            <div class="col-3">
+            <div class="col-2">
               <img src="${producto.image}" alt="${producto.name}" class="img-thumbnail">
             </div>
-            <div class="col-7">
+            <div class="col-8">
               <h3>${producto.name} - ${producto.currency} ${producto.cost}</h3>
               <p>${producto.description}</p>
             </div>
