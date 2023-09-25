@@ -54,6 +54,47 @@ async function fetchProductDetails(productId) {
 
       // Agregar el contenedor de imagen al contenedor de imágenes principal
       productImagesContainer.appendChild(imageContainer);
+
+      //Agregar productos relacionados
+    
+      const prodRel = document.getElementById ('productosRelacionados')
+      prodRel.innerHTML = '';
+      productDetails.relatedProducts.forEach((proR)=> {
+        // Crear un contenedor para cada producto relacionado
+      const prodRelacionado = document.createElement('div');
+      prodRelacionado.className = 'prodR-container'; // Agregar una clase para aplicar estilos
+
+      // Crear un botón para el producto relacionado
+     const botonProd = document.createElement('button');
+      botonProd.className = 'prodR-button'; // Agregar una clase para estilos de botón
+     botonProd.addEventListener('click', () => {
+     window.location.href = `product-info.html?id=${proR.id}`
+  });
+
+  // Crear un elemento de imagen
+  const ProdR = document.createElement('img');
+  ProdR.className = 'imgPrR'
+  ProdR.src = proR.image;
+  ProdR.alt = proR.name;
+
+  // Agregar la imagen al botón
+  botonProd.appendChild(ProdR);
+  botonProd.className = 'prodR-button'
+
+  // Crear un elemento de texto para el nombre del producto
+  const nombreProdR = document.createElement('p');
+  nombreProdR.textContent = proR.name;
+
+  // Agregar el nombre del producto al botón
+  botonProd.appendChild(nombreProdR);
+
+  // Agregar el botón al contenedor del producto relacionado
+  prodRelacionado.appendChild(botonProd);
+
+  // Agregar el contenedor del producto relacionado al contenedor principal
+  prodRel.appendChild(prodRelacionado);
+
+    });
     });
   } catch (error) {
     console.error('Error:', error);
