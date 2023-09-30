@@ -45,7 +45,19 @@
           <!-- Aquí se mostrarán los detalles del producto -->
         </div>
         <!-- Contenedor para imágenes del producto -->
-        <div id="productImages" class="product-images mt-4"></div>
+        <div id="productImages" class="product-images mt-4">
+          <!-- Botón de imagen anterior -->
+          <a class="carousel-control-prev" href="#productImages" role="button" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Anterior</span>
+          </a>
+
+          <!-- Botón de imagen siguiente -->
+          <a class="carousel-control-next" href="#productImages" role="button" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Siguiente</span>
+          </a>
+        </div>
       </div>
       <!-- Contenedor de comentarios -->
       <div id="commentsContainer" class="mt-4">
@@ -69,6 +81,7 @@
         <h2>Productos Relacionados</h2>
         <div id="productosRelacionados" class="prodR-button"></div>
       </div>
+    </div>
   </main>
   <footer class="text-muted">
     <div class="container">

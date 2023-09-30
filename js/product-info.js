@@ -26,75 +26,98 @@ async function fetchProductDetails(productId) {
 
     const productImagesContainer = document.getElementById('productImages');
     productImagesContainer.innerHTML = '';
-    productDetails.images.forEach((imageSrc) => {
-      // Crear un contenedor para cada imagen
-      const imageContainer = document.createElement('div');
-      imageContainer.className = 'image-container'; // Agregar una clase para aplicar estilos
+
+    // Crear un elemento div para el carrusel
+    const carouselDiv = document.createElement('div');
+    carouselDiv.className = 'carousel slide'; // Agregar clase para el carrusel
+    carouselDiv.setAttribute('data-bs-ride', 'carousel'); // Activar la funcionalidad de carrusel
+
+    // Crear el carrusel interno
+    const carouselInner = document.createElement('div');
+    carouselInner.className = 'carousel-inner';
+
+    productDetails.images.forEach((imageSrc, index) => {
+      // Crear un contenedor para cada imagen del carrusel
+      const carouselItem = document.createElement('div');
+      carouselItem.className = 'carousel-item';
+
+      if (index === 0) {
+        carouselItem.classList.add('active'); // Establecer la primera imagen como activa
+      }
 
       // Crear un elemento de imagen
       const imageElement = document.createElement('img');
       imageElement.src = imageSrc;
       imageElement.alt = productDetails.name;
 
-      const handleClick = () => {
-        if (imageElement.style.maxWidth === '100%') {
-          // Si la imagen está ampliada, volver al tamaño original
-          imageElement.style.maxWidth = '150px';
-        } else {
-          // Si la imagen está en tamaño original, hacer clic para ampliar
-          imageElement.style.maxWidth = '100%';
-        }
-      };
+      // Agregar la imagen al contenedor del carrusel
+      carouselItem.appendChild(imageElement);
 
-      // Evento de clic para hacer zoom y restaurar el tamaño original
-      imageElement.addEventListener('click', handleClick);
+      // Agregar el contenedor del carrusel al carrusel interno
+      carouselInner.appendChild(carouselItem);
+    });
 
-      // Agregar la imagen al contenedor de imágenes
-      imageContainer.appendChild(imageElement);
+    // Agregar el carrusel interno al div del carrusel
+    carouselDiv.appendChild(carouselInner);
 
-      // Agregar el contenedor de imagen al contenedor de imágenes principal
-      productImagesContainer.appendChild(imageContainer);
+    // Agregar los indicadores (puntos) para el carrusel
+    const carouselIndicators = document.createElement('ol');
+    carouselIndicators.className = 'carousel-indicators';
+    productDetails.images.forEach((_, index) => {
+      const indicator = document.createElement('li');
+      indicator.setAttribute('data-bs-target', '#productImages');
+      indicator.setAttribute('data-bs-slide-to', index.toString());
+      if (index === 0) {
+        indicator.classList.add('active');
+      }
+      carouselIndicators.appendChild(indicator);
+    });
 
-      //Agregar productos relacionados
-    
-      const prodRel = document.getElementById ('productosRelacionados')
-      prodRel.innerHTML = '';
-      productDetails.relatedProducts.forEach((proR)=> {
-        // Crear un contenedor para cada producto relacionado
+    // Agregar los indicadores al div del carrusel
+    carouselDiv.appendChild(carouselIndicators);
+
+    // Agregar el div del carrusel al contenedor de imágenes
+    productImagesContainer.appendChild(carouselDiv);
+
+    // Configurar el carrusel utilizando Bootstrap
+    new bootstrap.Carousel(carouselDiv);
+
+    // Agregar productos relacionados
+    const prodRel = document.getElementById('productosRelacionados');
+    prodRel.innerHTML = '';
+    productDetails.relatedProducts.forEach((proR) => {
+      // Crear un contenedor para cada producto relacionado
       const prodRelacionado = document.createElement('div');
       prodRelacionado.className = 'prodR-container'; // Agregar una clase para aplicar estilos
 
       // Crear un botón para el producto relacionado
-     const botonProd = document.createElement('button');
+      const botonProd = document.createElement('button');
       botonProd.className = 'prodR-button'; // Agregar una clase para estilos de botón
-     botonProd.addEventListener('click', () => {
-     window.location.href = `product-info.html?id=${proR.id}`
-  });
+      botonProd.addEventListener('click', () => {
+        window.location.href = `product-info.html?id=${proR.id}`;
+      });
 
-  // Crear un elemento de imagen
-  const ProdR = document.createElement('img');
-  ProdR.className = 'imgPrR'
-  ProdR.src = proR.image;
-  ProdR.alt = proR.name;
+      // Crear un elemento de imagen
+      const ProdR = document.createElement('img');
+      ProdR.className = 'imgPrR';
+      ProdR.src = proR.image;
+      ProdR.alt = proR.name;
 
-  // Agregar la imagen al botón
-  botonProd.appendChild(ProdR);
-  botonProd.className = 'prodR-button'
+      // Agregar la imagen al botón
+      botonProd.appendChild(ProdR);
 
-  // Crear un elemento de texto para el nombre del producto
-  const nombreProdR = document.createElement('p');
-  nombreProdR.textContent = proR.name;
+      // Crear un elemento de texto para el nombre del producto
+      const nombreProdR = document.createElement('p');
+      nombreProdR.textContent = proR.name;
 
-  // Agregar el nombre del producto al botón
-  botonProd.appendChild(nombreProdR);
+      // Agregar el nombre del producto al botón
+      botonProd.appendChild(nombreProdR);
 
-  // Agregar el botón al contenedor del producto relacionado
-  prodRelacionado.appendChild(botonProd);
+      // Agregar el botón al contenedor del producto relacionado
+      prodRelacionado.appendChild(botonProd);
 
-  // Agregar el contenedor del producto relacionado al contenedor principal
-  prodRel.appendChild(prodRelacionado);
-
-    });
+      // Agregar el contenedor del producto relacionado al contenedor principal
+      prodRel.appendChild(prodRelacionado);
     });
   } catch (error) {
     console.error('Error:', error);
@@ -171,7 +194,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const submitCommentButton = document.getElementById('submitComment');
     submitCommentButton.addEventListener('click', () => {
       // Obtener los valores del nuevo comentario
-      const savedUsername = localStorage.getItem("username");
+      const savedUsername = localStorage.getItem('username');
       const commentRating = document.getElementById('commentRating').value;
       const commentDescription = document.getElementById('commentDescription').value;
 
@@ -181,9 +204,9 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       }
 
-      //Limitar los valores posibles de puntuación entre 1 y  5.
-      if(commentRating < 0 || commentRating > 5){
-        alert("Por favor, seleccione un valor entre 1 y 5 en el campo de puntuación.");
+      // Limitar los valores posibles de puntuación entre 1 y 5.
+      if (commentRating < 0 || commentRating > 5) {
+        alert('Por favor, seleccione un valor entre 1 y 5 en el campo de puntuación.');
         return;
       }
 
@@ -229,7 +252,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // Limpiar los campos del formulario
       document.getElementById('commentRating').value = '';
-     
       document.getElementById('commentDescription').value = '';
 
       // Scroll hasta el nuevo comentario
