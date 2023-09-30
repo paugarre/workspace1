@@ -8,11 +8,12 @@
 
   <link href="https://fonts.googleapis.com/css?family=Raleway:300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
   <link href="css/font-awesome.min.css" rel="stylesheet">
-  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <!--<link href="css/bootstrap.min.css" rel="stylesheet">-->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="css/styles.css" rel="stylesheet">
 </head>
 
-<body>
+<body data-bs-theme="light">
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark p-1">
     <div class="container">
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -46,35 +47,36 @@
         <!-- Contenedor para imágenes del producto -->
         <div id="productImages" class="product-images mt-4"></div>
       </div>
-    <!-- Contenedor de comentarios -->
-    <div id="commentsContainer" class="mt-4">
-      <!-- Aquí se mostrarán los comentarios -->
-    </div>
-    <br>
-    <div class="col-md-4" id="p0">
-      <!-- Formulario para agregar comentarios -->
-      <h3>Agregar Comentario</h3>
-      <div class="mb-3">
-        <label for="commentRating" class="form-label">Puntuación:</label>
-        <input type="number" id="commentRating" class="form-control" min="1" max="5" required>
+      <!-- Contenedor de comentarios -->
+      <div id="commentsContainer" class="mt-4">
+        <!-- Aquí se mostrarán los comentarios -->
       </div>
-      <div class="mb-3">
-        <label for="commentDescription" class="form-label">Comentario:</label>
-        <textarea id="commentDescription" class="form-control" required></textarea>
+      <br>
+      <div class="col-md-4" id="p0">
+        <!-- Formulario para agregar comentarios -->
+        <h3>Agregar Comentario</h3>
+        <div class="mb-3">
+          <label for="commentRating" class="form-label">Puntuación:</label>
+          <input type="number" id="commentRating" class="form-control" min="1" max="5" required>
+        </div>
+        <div class="mb-3">
+          <label for="commentDescription" class="form-label">Comentario:</label>
+          <textarea id="commentDescription" class="form-control" required></textarea>
+        </div>
+        <button id="submitComment" class="btn btn-primary">Enviar Comentario</button>
       </div>
-      <button id="submitComment" class="btn btn-primary">Enviar Comentario</button>
-    </div>
-    <div>
-     <h2>Productos Relacionados</h2>
-     <div  id="productosRelacionados" class="prodR-button"></div>
-    </div>
+      <div>
+        <h2>Productos Relacionados</h2>
+        <div id="productosRelacionados" class="prodR-button"></div>
+      </div>
   </main>
   <footer class="text-muted">
     <div class="container">
       <p class="float-end">
         <a href="#">Volver arriba</a>
       </p>
-      <p>Este sitio forma parte de <a href="https://jovenesaprogramar.edu.uy/" target="_blank">Jovenes a Programar</a></p>
+      <p>Este sitio forma parte de <a href="https://jovenesaprogramar.edu.uy/" target="_blank">Jovenes a Programar</a>
+      </p>
     </div>
   </footer>
   <div id="spinner-wrapper">
@@ -86,6 +88,7 @@
     </div>
   </div>
   <script src="js/auth.js"></script>
+  <script src="js/darkmode.js"></script> <!--IMPORTANTE: el darkmode.js siempre tiene que estar después del auth.js-->
   <script src="js/bootstrap.bundle.min.js"></script>
   <script src="js/init.js"></script>
   <script src="js/product-info.js"></script>

@@ -32,6 +32,7 @@ function createDropdown() {
       dropdownMenu.appendChild(drop2);
       const drop3 = document.createElement("a");
       drop3.classList.add("dropdown-item");
+      drop3.setAttribute("id", "dark-mode");
       drop3.textContent = "Modo Noche-Día";
       dropdownMenu.appendChild(drop3);
       const divider = document.createElement("hr");
@@ -59,7 +60,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 // Verificar si el usuario está autenticado
-if (!isAuthenticated()) {
+if (!isAuthenticated() && !window.location.href.includes("login")) {
   // Si no estamos autenticados, redirigimos al formulario de inicio de sesión
   window.location.href = "login.html";
   alert("Debe ingresar para poder continuar");

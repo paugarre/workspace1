@@ -188,8 +188,10 @@ a.custom-card:hover {
 .checked {
   color: orange;
 }
-.list-group-item{ text-align: left; color:#000000a8 };
 
+.list-group-item {
+  text-align: left
+}
 
 /* Estilo para el título de las imágenes */
 #productImages p {
@@ -201,42 +203,53 @@ a.custom-card:hover {
 /* Estilo para los contenedores de imágenes */
 .image-container {
   display: inline-block;
-  margin-right: 10px; /* Espacio entre las imágenes */
+  margin-right: 10px;
+  /* Espacio entre las imágenes */
 }
 
 /* Estilo para las imágenes */
 .image-container img {
-  max-width: 150px; /* Ancho máximo de las imágenes */
-  cursor: pointer; /* Cambia el cursor al pasar por encima para indicar que se puede hacer clic */
+  max-width: 150px;
+  /* Ancho máximo de las imágenes */
+  cursor: pointer;
+  /* Cambia el cursor al pasar por encima para indicar que se puede hacer clic */
 }
 
 #commentsContainer {
-  background-color: #f8f9fa; /* Cambia el color de fondo si lo deseas */
-  padding: 20px; /* Añade un espacio alrededor del contenido de los comentarios */
-  border-radius: 10px; /* Aplica bordes redondeados */
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2); /* Agrega un sombreado suave */
+  padding: 20px;
+  /* Añade un espacio alrededor del contenido de los comentarios */
+  border-radius: 10px;
+  /* Aplica bordes redondeados */
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  /* Agrega un sombreado suave */
 }
 
 /* Estilos para los comentarios individuales */
 .comment-container {
-  margin-bottom: 20px; /* Espacio entre comentarios individuales */
+  margin-bottom: 20px;
+  /* Espacio entre comentarios individuales */
 }
-#p0  { 
+
+#p0 {
   padding: 8px;
   margin: 25px;
 }
+
 /*tamaño productos relacionados*/
 .prodR-container {
   margin-bottom: 10px;
   width: 10px;
-  display: flex; 
+  display: flex;
   cursor: pointer;
-  white-space: nowrap; 
+  white-space: nowrap;
 }
+
 .imgPrR {
-width: 200px;
+  width: 200px;
 }
+
 .prodR-button {
-  display: inline-block; /* Hace que los botones se muestren uno al lado del otro */
-  margin-right: 10px; /
+  display: inline-block;
+  /* Hace que los botones se muestren uno al lado del otro */
+  margin-right: 10px;/
 }
