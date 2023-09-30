@@ -12,7 +12,10 @@ function authenticate() {
   }
 }
 
-
+function CerrarSesion () {
+  localStorage.removeItem('username');
+  window.location.href = 'login.html'
+}
 
 function isAuthenticated() {
   return localStorage.getItem('authenticated') === 'true';

@@ -23,10 +23,12 @@ function isAuthenticated() {
             const drop1= document.createElement("a");
             drop1.classList.add("dropdown-item");
             drop1.textContent = "Mi carrito";
+            drop1.href ="cart.html";
             dropdownMenu.appendChild(drop1);
             const drop2= document.createElement("a");
             drop2.classList.add("dropdown-item");
             drop2.textContent = "Mi perfil";
+            drop2.href = "my-profile.html";
             dropdownMenu.appendChild(drop2);
             const drop3= document.createElement("a");
             drop3.classList.add("dropdown-item");
@@ -38,6 +40,9 @@ function isAuthenticated() {
             const drop4= document.createElement("a");
             drop4.classList.add("dropdown-item");
             drop4.textContent = "Cerrar sesión";
+            drop4.addEventListener("click", function(){ 
+              CerrarSesion();
+            });
             dropdownMenu.appendChild(drop4);
             
 
@@ -53,4 +58,9 @@ function isAuthenticated() {
     // Si no estamos autenticados, redirigimos al formulario de inicio de sesión
     window.location.href = "login.html";
     alert("Debe ingresar para poder continuar");
+  }
+
+  function CerrarSesion () {
+    localStorage.removeItem('username');
+    window.location.href = 'login.html'
   }
