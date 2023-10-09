@@ -41,6 +41,20 @@ nav a {
   font-weight: bold;
 }
 
+body[data-bs-theme="dark"] .jumbotron {
+  background: url('../img/dark_cover_back.jpg');
+  height: 50vh;
+  padding: 5em inherit;
+  margin-bottom: 0;
+  background-color: #53C0FB;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: black;
+  font-weight: bold;
+}
+
+
 @media (min-width: 768px) {
   .jumbotron {
     padding-top: 6rem;
@@ -208,23 +222,33 @@ a.custom-card:hover {
 
 /* Estilos para los indicadores del carrusel */
 #productImages .carousel-indicators {
-  position: static; /* Ajustar la posición según tus necesidades */
-  margin-top: 10px; /* Ajustar la separación superior según tus necesidades */
+  position: static;
+  /* Ajustar la posición según tus necesidades */
+  margin-top: 10px;
+  /* Ajustar la separación superior según tus necesidades */
   text-align: center;
 }
 
 /* Estilos para los controles del carrusel (flechas izquierda y derecha) */
-#productImages .carousel-control-prev, #productImages .carousel-control-next {
-  background-color: rgba(0, 0, 0, 0.5); /* Fondo semi-transparente para los controles */
+#productImages .carousel-control-prev,
+#productImages .carousel-control-next {
+  background-color: rgba(0, 0, 0, 0.5);
+  /* Fondo semi-transparente para los controles */
 }
 
 /* Estilo para los iconos de las flechas */
-#productImages .carousel-control-prev-icon, #productImages .carousel-control-next-icon {
-  background-color: #fff; /* Color de fondo de los iconos de flecha */
-  border-radius: 50%; /* Hacer que los iconos de flecha sean circulares */
-  color: #000; /* Color del icono de flecha */
-  font-size: 24px; /* Tamaño del icono de flecha */
-  padding: 10px; /* Espaciado interior del icono de flecha */
+#productImages .carousel-control-prev-icon,
+#productImages .carousel-control-next-icon {
+  background-color: #fff;
+  /* Color de fondo de los iconos de flecha */
+  border-radius: 50%;
+  /* Hacer que los iconos de flecha sean circulares */
+  color: #000;
+  /* Color del icono de flecha */
+  font-size: 24px;
+  /* Tamaño del icono de flecha */
+  padding: 10px;
+  /* Espaciado interior del icono de flecha */
 }
 
 
