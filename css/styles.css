@@ -22,7 +22,7 @@ nav a {
   user-select: none;
 }
 
-@media (min-width: 768px) {
+@media (width>=768px) {
   .bd-placeholder-img-lg {
     font-size: 3.5rem;
   }
@@ -43,19 +43,18 @@ nav a {
 
 body[data-bs-theme="dark"] .jumbotron {
   background: url('../img/dark_cover_back.jpg');
-  height: 50vh;
-  padding: 5em inherit;
-  margin-bottom: 0;
-  background-color: #53C0FB;
   background-size: cover;
   background-position: center;
-  background-repeat: no-repeat;
-  color: black;
-  font-weight: bold;
 }
 
+@media (width<=600px) {
+  .jumbotron {
+    width: 100vw;
+    height: 30vw;
+  }
+}
 
-@media (min-width: 768px) {
+@media (width>=768px) {
   .jumbotron {
     padding-top: 6rem;
     padding-bottom: 6rem;
