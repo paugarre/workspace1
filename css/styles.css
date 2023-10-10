@@ -29,13 +29,13 @@ nav a {
 }
 
 .jumbotron {
-  height: 50vh;
+  width: 100%;
   padding: 5em inherit;
   margin-bottom: 0;
   background-color: #53C0FB;
   background: url('../img/cover_back.png');
-  background-size: cover;
-  background-position: center;
+  background-size: contain;
+  background-position: initial;
   background-repeat: no-repeat;
   color: black;
   font-weight: bold;
@@ -43,21 +43,41 @@ nav a {
 
 body[data-bs-theme="dark"] .jumbotron {
   background: url('../img/dark_cover_back.jpg');
-  background-size: cover;
-  background-position: center;
+  background-size: contain;
+  background-position: initial;
+  background-repeat: no-repeat;
 }
+
 
 @media (width<=768px) {
   .jumbotron {
-    width: 100vw;
-    height: 30vw;
+    height: 200px;
+  }
+}
+
+@media (width<=500px) {
+  .jumbotron {
+    height: 140px;
   }
 }
 
 @media (width>=768px) {
   .jumbotron {
+    height: 300px;
     padding-top: 6rem;
     padding-bottom: 6rem;
+  }
+}
+
+@media (width>=1125px) {
+  .jumbotron {
+    height: 400px;
+  }
+}
+
+@media (width>=1500px) {
+  .jumbotron {
+    height: 550px;
   }
 }
 
