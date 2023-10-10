@@ -47,7 +47,7 @@ body[data-bs-theme="dark"] .jumbotron {
   background-position: center;
 }
 
-@media (width<=600px) {
+@media (width<=768px) {
   .jumbotron {
     width: 100vw;
     height: 30vw;
