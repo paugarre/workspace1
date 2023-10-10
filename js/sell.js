@@ -150,5 +150,13 @@ if (isAuthenticated()) {
         usernameDisplay.textContent = `${savedUsername}`;
         document.querySelector(".navbar-nav").appendChild(usernameDisplay);
     }
-}
-//aca se repite la misma funcion para que aparezca en Vender el nombre de usuario
+
+    if (isAuthenticated()) {
+        const savedUsername = localStorage.getItem("username");
+        if (savedUsername) {
+            usernameDisplay.textContent = `${savedUsername}`;
+            document.querySelector(".navbar-nav").appendChild(usernameDisplay);
+        }
+    }
+};
+//aca se repite la misma funcion para que aparezca en Vender el nombre de usuarios
