@@ -1,86 +1,145 @@
-// URL del carrito de compras (reemplaza '25801' por el ID de usuario correcto)
-const CART_URL = "https://japceibal.github.io/emercado-api/user_cart/25801.json";
+const apiUrl = "https://japceibal.github.io/emercado-api/user_cart/25801.json";
 
-// Función para cargar los datos del carrito y mostrarlos en la página
-function loadCartData() {
-  const cartInfo = document.getElementById('cart-info');
-  const quantityInput = document.getElementById('quantity');
-  const shippingOptions = document.getElementsByName('shipping');
-  const streetInput = document.getElementById('street');
-  const numberInput = document.getElementById('number');
-  const cornerInput = document.getElementById('corner');
-  const updateSubtotalButton = document.getElementById('update-subtotal');
-  const productImage = document.getElementById('product-image');
-  const productName = document.getElementById('product-name');
-  const productCost = document.getElementById('product-cost');
-  const productCurrency = document.getElementById('product-currency');
-  const subtotal = document.getElementById('subtotal');
+// Realizar la solicitud a la URL
+fetch(apiUrl)
+  .then(response => response.json())
+  .then(data => {
+    // Acceder a la información del carrito
+    const user = data.user;
+    const articles = data.articles;
 
-  // Realizar la solicitud GET al carrito de compras
-  getJSONData(CART_URL)
-    .then(function (response) {
-      if (response.status === 'ok') {
-        const cartData = response.data;
+    // Actualizar la tabla HTML con la información del carrito
+    const tableBody = document.getElementById("product-table-body");
+    const totalCell = document.getElementById("total");
+    let totalCost = 0;
 
-        // Obtener los datos del producto del carrito
-        const productData = cartData.product;
-        if (productData) {
-          productImage.src = productData.image;
-          productName.textContent = productData.name;
-          productCost.textContent = `${productData.currency} ${productData.cost.toFixed(2)}`;
-          productCurrency.textContent = productData.currency;
+    articles.forEach(article => {
+      const row = document.createElement("tr");
 
-          // Inicializar la cantidad en el input
-          quantityInput.value = cartData.count;
+      const imageCell = document.createElement("td");
+      imageCell.innerHTML = `<img src="${article.image}" alt="${article.name}" width="50">`;
 
-          // Calcular y mostrar el subtotal inicial
-          updateSubtotal();
+      const nameCell = document.createElement("td");
+      nameCell.textContent = article.name;
 
-          // Escuchar cambios en la cantidad para actualizar el subtotal en tiempo real
-          quantityInput.addEventListener('input', updateSubtotal);
-        }
+      const costCell = document.createElement("td");
+      costCell.textContent = article.unitCost;
 
-        // Mostrar opciones de tipo de envío
-        const shippingData = cartData.shipping;
-        if (shippingData) {
-          shippingOptions.forEach((option) => {
-            option.disabled = false;
-            option.addEventListener('change', updateSubtotal);
-          });
-        }
+      const quantityCell = document.createElement("td");
+      const quantityInput = document.createElement("input");
+      quantityInput.type = "number";
+      quantityInput.value = article.count;
 
-        // Mostrar dirección de envío
-        const addressData = cartData.address;
-        if (addressData) {
-          streetInput.value = addressData.street;
-          numberInput.value = addressData.number;
-          cornerInput.value = addressData.corner;
-        }
-      }
+      // Agregar un atributo "id" al input
+      quantityInput.id = `quantityInput_${article.productId}`;
+      quantityInput.addEventListener("input", () => {
+        updateSubtotal(article.unitCost, article.count, subtotalCell);
+        updateTotal();
+      });
+      quantityCell.appendChild(quantityInput);
+
+      const currencyCell = document.createElement("td");
+      currencyCell.textContent = article.currency;
+
+      const subtotalCell = document.createElement("td");
+
+      // Agregar un atributo "id" al subtotalCell
+      subtotalCell.id = `subtotalCell_${article.productId}`;
+      updateSubtotal(article.unitCost, article.count, subtotalCell);
+      totalCost += article.unitCost * article.count;
+
+      row.appendChild(imageCell);
+      row.appendChild(nameCell);
+      row.appendChild(costCell);
+      row.appendChild(quantityCell);
+      row.appendChild(currencyCell);
+      row.appendChild(subtotalCell);
+
+      tableBody.appendChild(row);
     });
-}
+    // Obtén la referencia a la tabla donde deseas mostrar los productos en cart.html
+    const cartTableBody = document.getElementById("product-table-body");
 
-// Función para actualizar el subtotal
-function updateSubtotal() {
-  const productCost = parseFloat(document.getElementById('product-cost').textContent.replace('$', ''));
-  const quantity = parseInt(document.getElementById('quantity').value);
-  const shippingOptions = document.getElementsByName('shipping');
-  let shippingCost = 0;
+    // Recupera los IDs de productos del localStorage
+    const cartProductIds = JSON.parse(localStorage.getItem("cartProductIds")) || [];
 
-  // Calcular el costo de envío según la opción seleccionada
-  shippingOptions.forEach((option) => {
-    if (option.checked) {
-      const shippingValue = parseFloat(option.value);
-      shippingCost = shippingValue * productCost;
+    // Itera a través de los IDs de productos y agrega filas a la tabla
+    cartProductIds.forEach(productId => {
+      // Realiza una solicitud AJAX para obtener los detalles del producto
+      fetch(`https://japceibal.github.io/emercado-api/products/${productId}.json`)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('No se pudo obtener los detalles del producto');
+          }
+          return response.json();
+        })
+        .then(product => {
+          const newRow = document.createElement("tr");
+
+          const imageCell = document.createElement("td");
+          imageCell.innerHTML = `<img src="${product.images[0]}" alt="${product.name}" width="50">`;
+
+          const nameCell = document.createElement("td");
+          nameCell.textContent = product.name;
+
+          const costCell = document.createElement("td");
+          costCell.textContent = product.cost;
+
+          const quantityCell = document.createElement("td");
+          const quantityInput = document.createElement("input");
+          quantityInput.type = "number";
+
+          // Establecer el valor inicial en "1"
+          quantityInput.value = 1;
+
+          quantityInput.addEventListener("input", () => {
+            // Actualiza el subtotal utilizando la cantidad del producto actual
+            updateSubtotal(product.cost, parseInt(quantityInput.value), subtotalCell);
+            updateTotal();
+          });
+
+          quantityCell.appendChild(quantityInput);
+
+          const currencyCell = document.createElement("td");
+          currencyCell.textContent = product.currency;
+
+          const subtotalCell = document.createElement("td");
+          updateSubtotal(product.cost, parseInt(quantityInput.value), subtotalCell);
+          totalCost += product.cost * 1; // Inicialmente, la cantidad es 1
+
+          newRow.appendChild(imageCell);
+          newRow.appendChild(nameCell);
+          newRow.appendChild(costCell);
+          newRow.appendChild(quantityCell);
+          newRow.appendChild(currencyCell);
+          newRow.appendChild(subtotalCell);
+
+          tableBody.appendChild(newRow);
+        })
+        .catch(error => {
+          console.error('Error al obtener los detalles del producto:', error);
+        });
+    });
+
+    totalCell.textContent = `Total: ${totalCost}`;
+
+    // Función para actualizar el subtotal de un producto
+    function updateSubtotal(cost, count, subtotalCell) {
+      console.log(cost, count);
+      const subtotal = cost * count;
+      // Actualiza el subtotal en la celda correspondiente
+      subtotalCell.textContent = subtotal;
+      // Actualiza el total
+      updateTotal();
+    }
+
+    // Función para actualizar el total
+    function updateTotal() {
+      let newTotal = 0;
+      const subtotalCells = document.querySelectorAll("td[subtotal]");
+      subtotalCells.forEach(subtotalCell => {
+        newTotal += parseFloat(subtotalCell.textContent);
+      });
+      totalCell.textContent = `Total: ${newTotal}`;
     }
   });
-
-  const subtotal = document.getElementById('subtotal');
-  const totalCost = productCost * quantity + shippingCost;
-  subtotal.textContent = `$${totalCost.toFixed(2)}`;
-}
-
-// Cargar los datos del carrito al cargar la página
-document.addEventListener('DOMContentLoaded', () => {
-  loadCartData();
-});
