@@ -32,8 +32,8 @@ fetch(apiUrl)
 
       // Agregar un atributo "id" al input
       quantityInput.id = `quantityInput_${article.productId}`;
-      quantityInput.addEventListener("input", () => {
-        updateSubtotal(article.unitCost, parseInt(quantityInput.value), subtotalCell);
+      quantityInput.addEventListener("input", (e) => {
+        updateSubtotal(article.unitCost, e.target.value === '' ? 0 : parseInt(quantityInput.value), subtotalCell);
         updateTotal();
       });
       quantityCell.appendChild(quantityInput);
@@ -92,9 +92,9 @@ fetch(apiUrl)
           // Establecer el valor inicial en "1"
           quantityInput.value = 1;
 
-          quantityInput.addEventListener("input", () => {
+          quantityInput.addEventListener("input", (e) => {
             // Actualiza el subtotal utilizando la cantidad del producto actual
-            updateSubtotal(product.cost, parseInt(quantityInput.value), subtotalCell);
+            updateSubtotal(product.cost, e.target.value === '' ? 0 : parseInt(quantityInput.value), subtotalCell);
             updateTotal();
           });
 
@@ -125,12 +125,13 @@ fetch(apiUrl)
 
     // Función para actualizar el subtotal de un producto
     function updateSubtotal(cost, count, subtotalCell) {
-      console.log(cost, count);
-      const subtotal = cost * count;
-      // Actualiza el subtotal en la celda correspondiente
-      subtotalCell.textContent = subtotal;
-      // Actualiza el total
-      updateTotal();
+      if (count >= 0) {
+        const subtotal = cost * count;
+        // Actualiza el subtotal en la celda correspondiente
+        subtotalCell.textContent = subtotal;
+        // Actualiza el total
+        updateTotal();
+      }
     }
 
     // Función para actualizar el total
