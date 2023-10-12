@@ -261,3 +261,34 @@ document.addEventListener('DOMContentLoaded', () => {
     console.error('ID de producto no encontrado en la URL.');
   }
 });
+
+const addToCartButton = document.getElementById("addToCart");
+
+addToCartButton.addEventListener("click", () => {
+  const productId = getProductIdFromURL();
+
+  if (productId) {
+    // Realiza una solicitud AJAX para obtener los detalles del producto
+    fetch(`https://japceibal.github.io/emercado-api/products/${productId}.json`)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('No se pudo obtener los detalles del producto');
+        }
+        return response.json();
+      })
+      .then(product => {
+        // Almacena solo el ID del producto en el almacenamiento local
+        const cartProductIds = JSON.parse(localStorage.getItem("cartProductIds")) || [];
+        cartProductIds.push(productId);
+        localStorage.setItem("cartProductIds", JSON.stringify(cartProductIds));
+
+        // Redirige a la página "cart.html"
+        window.location.href = "cart.html";
+      })
+      .catch(error => {
+        console.error('Error al obtener los detalles del producto:', error);
+      });
+  } else {
+    console.log("No se pudo obtener el ID del producto de la URL.");
+  }
+});
