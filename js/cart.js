@@ -184,9 +184,9 @@ function updateValues() {
   const totalAmount = document.getElementById("total-amount");
 
   // Actualizar los valores en dólares
-  subtotalAmount.textContent = `$${subtotalGeneral.toFixed(2)}`;
-  shippingAmount.textContent = `$${shippingCost.toFixed(2)}`;
-  totalAmount.textContent = `$${totalToPay.toFixed(2)}`;
+  subtotalAmount.textContent = `USD ${subtotalGeneral.toFixed(2)}`;
+  shippingAmount.textContent = `USD ${shippingCost.toFixed(2)}`;
+  totalAmount.textContent = `USD ${totalToPay.toFixed(2)}`;
 }
 // Llamar a updateValues() después de calcular los subtotales
 updateValues();
