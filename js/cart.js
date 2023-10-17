@@ -42,6 +42,8 @@ fetch(apiUrl)
       currencyCell.textContent = article.currency;
 
       const subtotalCell = document.createElement("td");
+      // Agregar la clase "subtotal" a las celdas de subtotal
+      subtotalCell.classList.add("subtotal");
 
       // Agregar un atributo "id" al subtotalCell
       subtotalCell.id = `subtotalCell_${article.productId}`;
@@ -104,6 +106,8 @@ fetch(apiUrl)
           currencyCell.textContent = product.currency;
 
           const subtotalCell = document.createElement("td");
+          // Agregar la clase "subtotal" a las celdas de subtotal
+          subtotalCell.classList.add("subtotal");
           updateSubtotal(product.cost, parseInt(quantityInput.value), subtotalCell);
           totalCost += product.cost * 1; // Inicialmente, la cantidad es 1
 
@@ -144,3 +148,53 @@ fetch(apiUrl)
       totalCell.textContent = `Total: ${newTotal}`;
     }
   });
+  // Función para calcular el subtotal general
+function calculateSubtotalGeneral() {
+  const subtotalCells = document.querySelectorAll("td.subtotal");
+  let subtotalGeneral = 0;
+  subtotalCells.forEach(subtotalCell => {
+    subtotalGeneral += parseFloat(subtotalCell.textContent);
+  });
+  return subtotalGeneral;
+}
+
+// Función para calcular el costo de envío
+function calculateShippingCost(subtotal) {
+  const shippingRadioButtons = document.querySelectorAll("input[name='shipping']");
+  let shippingCost = 0;
+
+  shippingRadioButtons.forEach(radioButton => {
+    if (radioButton.checked) {
+      const shippingRate = parseFloat(radioButton.value);
+      shippingCost = subtotal * shippingRate;
+    }
+  });
+
+  return shippingCost;
+}
+
+// Función para actualizar los valores mostrados en el HTML
+function updateValues() {
+  const subtotalGeneral = calculateSubtotalGeneral();
+  const shippingCost = calculateShippingCost(subtotalGeneral);
+  const totalToPay = subtotalGeneral + shippingCost;
+
+  const subtotalAmount = document.getElementById("subtotal-amount");
+  const shippingAmount = document.getElementById("shipping-amount");
+  const totalAmount = document.getElementById("total-amount");
+
+  // Actualizar los valores en dólares
+  subtotalAmount.textContent = `$${subtotalGeneral.toFixed(2)}`;
+  shippingAmount.textContent = `$${shippingCost.toFixed(2)}`;
+  totalAmount.textContent = `$${totalToPay.toFixed(2)}`;
+}
+// Llamar a updateValues() después de calcular los subtotales
+updateValues();
+
+// Agregar un evento para escuchar cambios en los radios de envío
+const shippingRadioButtons = document.querySelectorAll("input[name='shipping']");
+shippingRadioButtons.forEach(radioButton => {
+  radioButton.addEventListener("change", () => {
+    updateValues();
+  });
+});
