@@ -116,6 +116,53 @@ Total a Pagar($): <span id="total-amount">USD0</span>
 </div>
 <hr>
 <br>
+<h3>Forma de pago</h3>
+<!-- Botón para abrir el modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#paymentModal">Seleccionar</button>
+<!-- Modal -->
+
+<div class="modal fade" id="paymentModal" tabindex="-1" aria-labelledby="paymentModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="paymentModalLabel">Seleccione una forma de pago</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="paymentMethod" id="creditCardRadio" value="creditCard">
+            <label class="form-check-label" for="creditCardRadio">Tarjeta de Crédito</label>
+          </div>
+          
+          <div class="mb-3">
+            <input type="text" class="form-control" id="creditCardNumber" placeholder="Número de tarjeta">
+          </div>
+          <div class="mb-3">
+            <input type="text" class="form-control" id="creditCardCode" placeholder="Código de seg.">
+          </div>
+          <div class="mb-3">
+            <input type="text" class="form-control" id="creditCardExpiry" placeholder="Vencimiento (MM/AA)">
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="paymentMethod" id="bankTransferRadio" value="bankTransfer">
+            <label class="form-check-label" for="bankTransferRadio">Transferencia Bancaria</label>
+          </div>
+          <div class="mb-3">
+            <input type="text" class="form-control" id="bankAccount" placeholder="Número de cuenta bancaria">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<hr>
+<br>
 
     <footer class="text-muted">
       <div class="container text-center">
