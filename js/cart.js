@@ -198,3 +198,24 @@ shippingRadioButtons.forEach(radioButton => {
     updateValues();
   });
 });
+
+// Función para habilitar o deshabilitar los campos según la selección
+function handlePaymentMethodChange() {
+  if (creditCardRadio.checked) {
+    // Si se selecciona "Tarjeta de Crédito"
+    bankAccount.disabled = true;
+    creditCardNumber.disabled = false;
+    creditCardExpiry.disabled = false;
+    creditCardCode.disabled = false;
+  } else if (bankTransferRadio.checked) {
+    // Si se selecciona "Transferencia Bancaria"
+    creditCardNumber.disabled = true;
+    creditCardExpiry.disabled = true;
+    creditCardCode.disabled = true;
+    bankAccount.disabled = false;
+  }
+}
+
+// Escucha los cambios en la selección de forma de pago
+creditCardRadio.addEventListener('change', handlePaymentMethodChange);
+bankTransferRadio.addEventListener('change', handlePaymentMethodChange);
