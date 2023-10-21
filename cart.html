@@ -53,7 +53,7 @@
       </tbody>
       <tr>
         <td colspan="5"></td>
-        <td id="total">Total:</td>
+        <td id="total"></td>
       </tr>
     </table>
 
@@ -77,6 +77,8 @@
           <label class="form-check-label" for="standard">
             Standard (12-15 días, 5% recargo)
           </label>
+          <div id="shipping-error" class="error-message"></div>
+        </div>
         </div>
       </div>
       <br>
@@ -86,14 +88,18 @@
         <div class="mb-3">
           <label for="street" class="form-label">Calle</label>
           <input type="text" class="form-control" id="street">
+          <div class="error-message" id="street-error"></div>
         </div>
+        
         <div class="mb-3">
           <label for="number" class="form-label">Número</label>
           <input type="text" class="form-control" id="number">
+          <div class="error-message" id="number-error"></div>
         </div>
         <div class="mb-3">
           <label for="corner" class="form-label">Esquina</label>
           <input type="text" class="form-control" id="corner">
+          <div class="error-message" id="corner-error"></div>
         </div>
       </div>
     </div>
@@ -131,25 +137,29 @@ Total a Pagar($): <span id="total-amount">USD0</span>
       <div class="modal-body">
         <form>
           <div class="form-check">
-            <input class="form-check-input" type="radio" name="paymentMethod" id="creditCardRadio" value="creditCard">
+            <input class="form-check-input" type="radio" name="paymentMethod" id="creditCardRadio" value="Tarjeta de Crédito">
             <label class="form-check-label" for="creditCardRadio">Tarjeta de Crédito</label>
           </div>
           
           <div class="mb-3">
             <input type="text" class="form-control" id="creditCardNumber" placeholder="Número de tarjeta">
+            <div class="error-message" id="number-card"></div>
           </div>
           <div class="mb-3">
             <input type="text" class="form-control" id="creditCardCode" placeholder="Código de seg.">
+            <div class="error-message" id="card-code"></div>
           </div>
           <div class="mb-3">
             <input type="text" class="form-control" id="creditCardExpiry" placeholder="Vencimiento (MM/AA)">
+            <div class="error-message" id="card-expiry"></div>
           </div>
           <div class="form-check">
-            <input class="form-check-input" type="radio" name="paymentMethod" id="bankTransferRadio" value="bankTransfer">
+            <input class="form-check-input" type="radio" name="paymentMethod" id="bankTransferRadio" value="Transferencia Bancaria">
             <label class="form-check-label" for="bankTransferRadio">Transferencia Bancaria</label>
           </div>
           <div class="mb-3">
             <input type="text" class="form-control" id="bankAccount" placeholder="Número de cuenta bancaria">
+            <div class="error-message" id="number-account"></div>
           </div>
         </form>
       </div>
@@ -159,7 +169,15 @@ Total a Pagar($): <span id="total-amount">USD0</span>
     </div>
   </div>
 </div>
+<div id="paymentMethodLabel">Forma de Pago: No seleccionado</div>
 
+
+<!-- Botón de Confirmar Compra -->
+<button type="button" class="btn btn-success" id="confirmPurchaseButton">Finalizar Compra</button>
+
+<div id="confirmation-message" class="alert alert-success" style="display: none;">
+  ¡Has comprado con éxito!
+</div>
 
 <hr>
 <br>

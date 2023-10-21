@@ -55,7 +55,7 @@ fetch(apiUrl)
       row.appendChild(costCell);
       row.appendChild(quantityCell);
       row.appendChild(currencyCell);
-      row.appendChild(subtotalCell);
+      row.appendChild(subtotalCell);   
 
       tableBody.appendChild(row);
     });
@@ -125,7 +125,7 @@ fetch(apiUrl)
         });
     });
 
-    totalCell.textContent = `Total: ${totalCost}`;
+    totalCell.textContent = ` ${totalCost}`;
 
     // Función para actualizar el subtotal de un producto
     function updateSubtotal(cost, count, subtotalCell) {
@@ -140,12 +140,12 @@ fetch(apiUrl)
 
     // Función para actualizar el total
     function updateTotal() {
-      let newTotal = 0;
+      let newTotal = "";
       const subtotalCells = document.querySelectorAll("td[subtotal]");
       subtotalCells.forEach(subtotalCell => {
         newTotal += parseFloat(subtotalCell.textContent);
       });
-      totalCell.textContent = `Total: ${newTotal}`;
+      totalCell.textContent = ` ${newTotal}`;
     }
   });
   // Función para calcular el subtotal general
@@ -216,6 +216,106 @@ function handlePaymentMethodChange() {
   }
 }
 
-// Escucha los cambios en la selección de forma de pago
-creditCardRadio.addEventListener('change', handlePaymentMethodChange);
-bankTransferRadio.addEventListener('change', handlePaymentMethodChange);
+// Agregar un controlador de eventos para el cambio de elementos de radio
+const paymentMethodRadios = document.querySelectorAll("input[name='paymentMethod']");
+const paymentMethodLabel = document.getElementById("paymentMethodLabel");
+
+paymentMethodRadios.forEach(radio => {
+  radio.addEventListener("change", (e) => {
+    const selectedPaymentMethod = e.target.value;
+    paymentMethodLabel.textContent = `Forma de Pago: ${selectedPaymentMethod}`;
+  });
+});
+
+// Obtén una referencia al botón de confirmación de compra
+const confirmPurchaseButton = document.getElementById("confirmPurchaseButton");
+
+// Agrega un controlador de eventos para el clic en el botón
+confirmPurchaseButton.addEventListener("click", () => {
+  // Realiza todas las validaciones antes de confirmar la compra
+
+  // Validación de campos de dirección
+  const street = document.getElementById("street").value;
+  const number = document.getElementById("number").value;
+  const corner = document.getElementById("corner").value;
+  
+  if (street.trim() === "" || number.trim() === "" || corner.trim() === "") {
+    toggleErrorMessage(document.getElementById("street-error"), "Ingresa una calle.");
+    toggleErrorMessage(document.getElementById("number-error"), "Ingresa un número.");
+    toggleErrorMessage(document.getElementById("corner-error"), "Ingresa una esquina.");
+    return;
+  } else {
+  // Ocultar el mensaje de error
+    toggleErrorMessage(document.getElementById("street-error"), null);
+    toggleErrorMessage(document.getElementById("number-error"), null);
+    toggleErrorMessage(document.getElementById("corner-error"), null);
+  }
+
+  // Validación de forma de envío
+  const selectedShippingMethod = document.querySelector("input[name='shipping']:checked");
+  if (!selectedShippingMethod) {
+    alert("Debes seleccionar una forma de envío.");
+    return;
+  }
+
+  // Validación de cantidad para cada artículo
+  const quantityInputs = document.querySelectorAll("input[type='number']");
+  for (const input of quantityInputs) {
+    const quantity = parseInt(input.value);
+    if (isNaN(quantity) || quantity <= 0) {
+      alert("La cantidad para cada artículo debe ser mayor a 0.");
+      return;
+    }
+  }
+
+   // Validación de forma de pago
+   const selectedPaymentMethod = document.querySelector("input[name='paymentMethod']:checked");
+   if (!selectedPaymentMethod) {
+     alert("Debes seleccionar una forma de pago.");
+     return;
+   }
+ 
+   // Validación de campos para la forma de pago seleccionada
+   const creditCardNumber = document.getElementById("creditCardNumber");
+   const creditCardCode = document.getElementById("creditCardCode");
+   const creditCardExpiry = document.getElementById("creditCardExpiry");
+   const bankAccount = document.getElementById("bankAccount");
+ 
+   if (selectedPaymentMethod.value === "creditCard" && (creditCardNumber.value.trim() === "" || creditCardCode.value.trim() === "" || creditCardExpiry.value.trim() === "")) {
+    toggleErrorMessage(document.getElementById("number-card"), "Ingresa el número de la tarjeta.")
+    toggleErrorMessage(document.getElementById("card-code"), "Ingresa el codigo de la tarjeta.")
+    toggleErrorMessage(document.getElementById("card-expiry"), "Ingresa la fecha de vencimiento.")
+     return;}
+     else {
+      // Ocultar el mensaje de error
+        toggleErrorMessage(document.getElementById("number-card"), null);
+        toggleErrorMessage(document.getElementById("card-code"), null);
+        toggleErrorMessage(document.getElementById("card-expiry"), null);
+      }
+
+   if (selectedPaymentMethod.value === "bankTransfer" && bankAccount.value.trim() === "") {
+    toggleErrorMessage(document.getElementById("number-account"), "Ingresa el número de la cuenta bancaria.")
+     return;
+   }
+   else {
+    // Ocultar el mensaje de error
+      toggleErrorMessage(document.getElementById("number-account"), null);
+    }
+  // Si todas las validaciones pasaron, puedes continuar con la confirmación de compra
+  const selectedPaymentMethodValue = selectedPaymentMethod.value;
+  const selectedShippingMethodValue = selectedShippingMethod.value;
+
+  // Después de confirmar la compra exitosamente, muestra el mensaje de confirmación
+  const confirmationMessage = document.getElementById("confirmation-message");
+  confirmationMessage.style.display = "block";
+});
+
+function toggleErrorMessage(errorElement, message) {
+  if (message) {
+    errorElement.textContent = message;
+    errorElement.style.display = "block";
+  } else {
+    errorElement.textContent = "";
+    errorElement.style.display = "none";
+  }
+}

@@ -309,3 +309,9 @@ a.custom-card:hover {
   /* Hace que los botones se muestren uno al lado del otro */
   margin-right: 10px;/
 }
+
+.error-message {
+  color: red;
+  font-size: 14px;
+  display: none; /* Por defecto, ocultar los mensajes de error */
+}
