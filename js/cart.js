@@ -232,30 +232,42 @@ const confirmPurchaseButton = document.getElementById("confirmPurchaseButton");
 
 // Agrega un controlador de eventos para el clic en el botón
 confirmPurchaseButton.addEventListener("click", () => {
-  // Realiza todas las validaciones antes de confirmar la compra
+  // Crea una variable para mantener un seguimiento de si hay errores
+  let hasErrors = false;
 
   // Validación de campos de dirección
   const street = document.getElementById("street").value;
   const number = document.getElementById("number").value;
   const corner = document.getElementById("corner").value;
-  
-  if (street.trim() === "" || number.trim() === "" || corner.trim() === "") {
+
+  if (street.trim() === "") {
+    hasErrors = true;
     toggleErrorMessage(document.getElementById("street-error"), "Ingresa una calle.");
-    toggleErrorMessage(document.getElementById("number-error"), "Ingresa un número.");
-    toggleErrorMessage(document.getElementById("corner-error"), "Ingresa una esquina.");
-    return;
   } else {
-  // Ocultar el mensaje de error
     toggleErrorMessage(document.getElementById("street-error"), null);
+  }
+
+  if (number.trim() === "") {
+    hasErrors = true;
+    toggleErrorMessage(document.getElementById("number-error"), "Ingresa un número.");
+  } else {
     toggleErrorMessage(document.getElementById("number-error"), null);
+  }
+
+  if (corner.trim() === "") {
+    hasErrors = true;
+    toggleErrorMessage(document.getElementById("corner-error"), "Ingresa una esquina.");
+  } else {
     toggleErrorMessage(document.getElementById("corner-error"), null);
   }
 
   // Validación de forma de envío
   const selectedShippingMethod = document.querySelector("input[name='shipping']:checked");
   if (!selectedShippingMethod) {
-    alert("Debes seleccionar una forma de envío.");
-    return;
+    hasErrors = true;
+    toggleErrorMessage(document.getElementById("shipping-error"), "Debes seleccionar una forma de envío.");
+  } else {
+    toggleErrorMessage(document.getElementById("shipping-error"), null);
   }
 
   // Validación de cantidad para cada artículo
@@ -263,45 +275,27 @@ confirmPurchaseButton.addEventListener("click", () => {
   for (const input of quantityInputs) {
     const quantity = parseInt(input.value);
     if (isNaN(quantity) || quantity <= 0) {
+      hasErrors = true;
       alert("La cantidad para cada artículo debe ser mayor a 0.");
-      return;
+      break; // Sal del bucle en caso de un error
     }
   }
 
-   // Validación de forma de pago
-   const selectedPaymentMethod = document.querySelector("input[name='paymentMethod']:checked");
-   if (!selectedPaymentMethod) {
-     alert("Debes seleccionar una forma de pago.");
-     return;
-   }
- 
-   // Validación de campos para la forma de pago seleccionada
-   const creditCardNumber = document.getElementById("creditCardNumber");
-   const creditCardCode = document.getElementById("creditCardCode");
-   const creditCardExpiry = document.getElementById("creditCardExpiry");
-   const bankAccount = document.getElementById("bankAccount");
- 
-   if (selectedPaymentMethod.value === "creditCard" && (creditCardNumber.value.trim() === "" || creditCardCode.value.trim() === "" || creditCardExpiry.value.trim() === "")) {
-    toggleErrorMessage(document.getElementById("number-card"), "Ingresa el número de la tarjeta.")
-    toggleErrorMessage(document.getElementById("card-code"), "Ingresa el codigo de la tarjeta.")
-    toggleErrorMessage(document.getElementById("card-expiry"), "Ingresa la fecha de vencimiento.")
-     return;}
-     else {
-      // Ocultar el mensaje de error
-        toggleErrorMessage(document.getElementById("number-card"), null);
-        toggleErrorMessage(document.getElementById("card-code"), null);
-        toggleErrorMessage(document.getElementById("card-expiry"), null);
-      }
+  // Validación de forma de pago
+  const selectedPaymentMethod = document.querySelector("input[name='paymentMethod']:checked");
+  if (!selectedPaymentMethod) {
+    hasErrors = true;
+    toggleErrorMessage(document.getElementById("payment-error"), "Debes seleccionar una forma de pago.");
+  } else {
+    toggleErrorMessage(document.getElementById("payment-error"), null);
+  }
 
-   if (selectedPaymentMethod.value === "bankTransfer" && bankAccount.value.trim() === "") {
-    toggleErrorMessage(document.getElementById("number-account"), "Ingresa el número de la cuenta bancaria.")
-     return;
-   }
-   else {
-    // Ocultar el mensaje de error
-      toggleErrorMessage(document.getElementById("number-account"), null);
-    }
-  // Si todas las validaciones pasaron, puedes continuar con la confirmación de compra
+  if (hasErrors) {
+    // Si hay errores, no continúes con la compra
+    return;
+  }
+
+  // Si no hay errores, puedes continuar con la confirmación de compra
   const selectedPaymentMethodValue = selectedPaymentMethod.value;
   const selectedShippingMethodValue = selectedShippingMethod.value;
 
@@ -319,3 +313,4 @@ function toggleErrorMessage(errorElement, message) {
     errorElement.style.display = "none";
   }
 }
+
