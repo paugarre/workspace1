@@ -58,6 +58,22 @@ fetch(apiUrl)
       row.appendChild(subtotalCell);   
 
       tableBody.appendChild(row);
+
+      const deleteButtonCell = document.createElement("td");
+      const deleteButton = document.createElement("button");
+      deleteButton.textContent = "Eliminar";
+      deleteButton.addEventListener("click", () => {
+        // Eliminar el artículo y la fila de la tabla
+        tableBody.removeChild(row);
+        // También puedes agregar código para actualizar el total
+        updateTotal();
+      });
+    
+      deleteButtonCell.appendChild(deleteButton);
+      row.appendChild(deleteButtonCell);
+    
+      tableBody.appendChild(row);
+  
     });
     // Obtén la referencia a la tabla donde deseas mostrar los productos en cart.html
     const cartTableBody = document.getElementById("product-table-body");
