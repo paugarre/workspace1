@@ -63,9 +63,9 @@ fetch(apiUrl)
       const deleteButton = document.createElement("button");
       deleteButton.textContent = "Eliminar";
       deleteButton.addEventListener("click", () => {
-        // Eliminar el artículo y la fila de la tabla
+        // Elimina el artículo y la fila de la tabla
         tableBody.removeChild(row);
-        // También puedes agregar código para actualizar el total
+        // Actualiza el total
         updateTotal();
       });
     
