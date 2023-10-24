@@ -59,20 +59,44 @@ fetch(apiUrl)
 
       tableBody.appendChild(row);
 
-      const deleteButtonCell = document.createElement("td");
-      const deleteButton = document.createElement("button");
-      deleteButton.textContent = "Eliminar";
-      deleteButton.addEventListener("click", () => {
-        // Elimina el artículo y la fila de la tabla
-        tableBody.removeChild(row);
-        // Actualiza el total
-        updateTotal();
-      });
-    
-      deleteButtonCell.appendChild(deleteButton);
-      row.appendChild(deleteButtonCell);
-    
-      tableBody.appendChild(row);
+  // Agregar un botón de eliminación
+    const deleteButtonCell = document.createElement("td");
+    const deleteButton = document.createElement("button");
+    deleteButton.type = "button"; 
+    deleteButton.classList.add("btn", "btn-outline-danger"); // Agrega clases de Bootstrap
+
+    const iconSvg = document.createElement("svg");
+    iconSvg.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+    iconSvg.setAttribute("width", "16");
+    iconSvg.setAttribute("height", "16");
+    iconSvg.setAttribute("fill", "currentColor");
+    iconSvg.setAttribute("class", "bi bi-trash");
+    iconSvg.setAttribute("viewBox", "0 0 16 16");
+
+    const path1 = document.createElement("path");
+    path1.setAttribute("d", "M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Z");
+
+    const path2 = document.createElement("path");
+    path2.setAttribute("d", "M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z");
+
+    iconSvg.appendChild(path1);
+    iconSvg.appendChild(path2);
+
+    deleteButton.appendChild(iconSvg);
+    deleteButton.innerHTML += " Eliminar";
+
+    deleteButton.addEventListener("click", () => {
+      // Elimina el artículo y la fila de la tabla
+      tableBody.removeChild(row);
+      // Actualiza el total
+      updateTotal();
+    });
+
+deleteButtonCell.appendChild(deleteButton);
+row.appendChild(deleteButtonCell);
+
+tableBody.appendChild(row);
+
   
     });
     // Obtén la referencia a la tabla donde deseas mostrar los productos en cart.html
@@ -82,17 +106,18 @@ fetch(apiUrl)
     const cartProductIds = JSON.parse(localStorage.getItem("cartProductIds")) || [];
 
     // Itera a través de los IDs de productos y agrega filas a la tabla
-    cartProductIds.forEach(productId => {
-      // Realiza una solicitud AJAX para obtener los detalles del producto
-      fetch(`https://japceibal.github.io/emercado-api/products/${productId}.json`)
-        .then(response => {
-          if (!response.ok) {
-            throw new Error('No se pudo obtener los detalles del producto');
-          }
-          return response.json();
-        })
-        .then(product => {
-          const newRow = document.createElement("tr");
+cartProductIds.forEach(productId => {
+  // Realiza una solicitud AJAX para obtener los detalles del producto
+  fetch(`https://japceibal.github.io/emercado-api/products/${productId}.json`)
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('No se pudo obtener los detalles del producto');
+      }
+      return response.json();
+    })
+    .then(product => {
+      const newRow = document.createElement("tr");
+
 
           const imageCell = document.createElement("td");
           imageCell.innerHTML = `<img src="${product.images[0]}" alt="${product.name}" width="50">`;
@@ -135,7 +160,46 @@ fetch(apiUrl)
           newRow.appendChild(subtotalCell);
 
           tableBody.appendChild(newRow);
-        })
+
+      // Agregar un botón de eliminación
+      const deleteButtonCell = document.createElement("td");
+      const deleteButton = document.createElement("button");
+      deleteButton.type = "button"; 
+      deleteButton.classList.add("btn", "btn-outline-danger"); // Agrega clases de Bootstrap
+
+      const iconSvg = document.createElement("svg");
+      iconSvg.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+      iconSvg.setAttribute("width", "16");
+      iconSvg.setAttribute("height", "16");
+      iconSvg.setAttribute("fill", "currentColor");
+      iconSvg.setAttribute("class", "bi bi-trash");
+      iconSvg.setAttribute("viewBox", "0 0 16 16");
+
+      const path1 = document.createElement("path");
+      path1.setAttribute("d", "M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Z");
+
+      const path2 = document.createElement("path");
+      path2.setAttribute("d", "M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z");
+
+      iconSvg.appendChild(path1);
+      iconSvg.appendChild(path2);
+
+      deleteButton.appendChild(iconSvg);
+      deleteButton.innerHTML += " Eliminar"; 
+
+      deleteButton.addEventListener("click", () => {
+        // Elimina el artículo y la fila de la tabla
+        tableBody.removeChild(newRow);
+        // Actualiza el total
+        updateTotal();
+      });
+
+      deleteButtonCell.appendChild(deleteButton);
+      newRow.appendChild(deleteButtonCell);
+
+      tableBody.appendChild(newRow);
+          })
+
         .catch(error => {
           console.error('Error al obtener los detalles del producto:', error);
         });
@@ -154,14 +218,16 @@ fetch(apiUrl)
       }
     }
 
-    // Función para actualizar el total
     function updateTotal() {
-      let newTotal = "";
-      const subtotalCells = document.querySelectorAll("td[subtotal]");
+      const subtotalCells = document.querySelectorAll("td.subtotal");
+      let newTotal = 0;
+    
       subtotalCells.forEach(subtotalCell => {
         newTotal += parseFloat(subtotalCell.textContent);
       });
-      totalCell.textContent = ` ${newTotal}`;
+    
+      totalCell.textContent = ` ${newTotal.toFixed(2)}`;
+      updateValues(); // Actualiza los valores de subtotal, costo de envío y total
     }
   });
   // Función para calcular el subtotal general
