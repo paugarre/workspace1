@@ -149,8 +149,16 @@ fetch(apiUrl)
           const subtotalCell = document.createElement("td");
           // Agregar la clase "subtotal" a las celdas de subtotal
           subtotalCell.classList.add("subtotal");
-          updateSubtotal(product.cost, parseInt(quantityInput.value), subtotalCell);
-          totalCost += product.cost * 1; // Inicialmente, la cantidad es 1
+
+          quantityInput.addEventListener("input", function() {
+            const inputValue = parseInt(quantityInput.value);
+            if (inputValue < 1) {
+              quantityInput.value = "1"; // Restringir el valor mínimo a 1
+            };
+
+            updateSubtotal(product.cost, inputValue, subtotalCell);
+            totalCost = product.cost * inputValue;
+          }); // Realiza los cálculos con el nuevo valor
 
           newRow.appendChild(imageCell);
           newRow.appendChild(nameCell);
