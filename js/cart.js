@@ -133,6 +133,10 @@ fetch(apiUrl)
           return response.json();
         })
         .then(product => {
+
+                // Aplica la conversión de moneda a USD si es necesario
+      const convertedCost = convertToUSD(product.cost, product.currency);
+
           const newRow = document.createElement("tr");
 
 
@@ -143,7 +147,7 @@ fetch(apiUrl)
           nameCell.textContent = product.name;
 
           const costCell = document.createElement("td");
-          costCell.textContent = convertUYUtoUSD(product.cost, product.currency);
+          costCell.textContent = convertUYUtoUSD(product.cost, product.currency).toFixed(2);
 
           const quantityCell = document.createElement("td");
           const quantityInput = document.createElement("input");
@@ -225,9 +229,23 @@ fetch(apiUrl)
           console.error('Error al obtener los detalles del producto:', error);
         });
     });
+    // Itera a través de los IDs de productos y agrega filas a la tabla
+cartProductIds.forEach(productId => {
+  fetchProductDetailsAndAddToCart(productId);
+});
 
     /*totalCell.textContent = ` ${totalCost}`;*/
 
+//funcion para convertir de Uyu a usd
+    function convertToUSD(amount, currency) {
+  if (currency === "UYU") {
+    // Dividir la cantidad en UYU por el tipo de cambio (40)
+    return amount / 40;
+  } else {
+    // Si la moneda no es UYU, devolver la cantidad sin cambios
+    return amount;
+  }
+}
     // Función para actualizar el subtotal de un producto
     function updateSubtotal(cost, count, subtotalCell) {
       if (count >= 0) {
