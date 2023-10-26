@@ -19,7 +19,6 @@ fetch(apiUrl)
     // Actualizar la tabla HTML con la información del carrito
     const tableBody = document.getElementById("product-table-body");
     const totalCell = document.getElementById("total");
-    let totalCost = 0;
 
     articles.forEach(article => {
       const row = document.createElement("tr");
@@ -57,7 +56,6 @@ fetch(apiUrl)
       // Agregar un atributo "id" al subtotalCell
       subtotalCell.id = `subtotalCell_${article.productId}`;
       updateSubtotal(article.unitCost, parseInt(quantityInput.value), subtotalCell);
-      totalCost += article.unitCost * article.count;
 
       row.appendChild(imageCell);
       row.appendChild(nameCell);
@@ -134,8 +132,8 @@ fetch(apiUrl)
         })
         .then(product => {
 
-                // Aplica la conversión de moneda a USD si es necesario
-      const convertedCost = convertToUSD(product.cost, product.currency);
+          // Aplica la conversión de moneda a USD si es necesario
+          const convertedCost = convertToUSD(product.cost, product.currency);
 
           const newRow = document.createElement("tr");
 
@@ -173,8 +171,6 @@ fetch(apiUrl)
           const subtotalCell = document.createElement("td");
           // Agregar la clase "subtotal" a las celdas de subtotal
           subtotalCell.classList.add("subtotal");
-
-          totalCost += product.cost * 1; // Inicialmente, la cantidad es 1
 
           newRow.appendChild(imageCell);
           newRow.appendChild(nameCell);
@@ -229,29 +225,23 @@ fetch(apiUrl)
           console.error('Error al obtener los detalles del producto:', error);
         });
     });
-    // Itera a través de los IDs de productos y agrega filas a la tabla
-cartProductIds.forEach(productId => {
-  fetchProductDetailsAndAddToCart(productId);
-});
 
-    /*totalCell.textContent = ` ${totalCost}`;*/
-
-//funcion para convertir de Uyu a usd
+    //funcion para convertir de Uyu a usd
     function convertToUSD(amount, currency) {
-  if (currency === "UYU") {
-    // Dividir la cantidad en UYU por el tipo de cambio (40)
-    return amount / 40;
-  } else {
-    // Si la moneda no es UYU, devolver la cantidad sin cambios
-    return amount;
-  }
-}
+      if (currency === "UYU") {
+        // Dividir la cantidad en UYU por el tipo de cambio (40)
+        return amount / 40;
+      } else {
+        // Si la moneda no es UYU, devolver la cantidad sin cambios
+        return amount;
+      }
+    }
     // Función para actualizar el subtotal de un producto
     function updateSubtotal(cost, count, subtotalCell) {
       if (count >= 0) {
         const subtotal = cost * count;
         // Actualiza el subtotal en la celda correspondiente
-        subtotalCell.textContent = subtotal;
+        subtotalCell.textContent = subtotal.toFixed(2);
         // Actualiza el total
         updateTotal();
       }
@@ -263,10 +253,7 @@ cartProductIds.forEach(productId => {
 
       subtotalCells.forEach(subtotalCell => {
         newTotal += parseFloat(subtotalCell.textContent);
-        console.log(parseFloat(subtotalCell.textContent));
       });
-
-      console.log("acá pija mathi tkm");
 
       totalCell.textContent = ` ${newTotal.toFixed(2)}`;
       updateValues(); // Actualiza los valores de subtotal, costo de envío y total
@@ -279,7 +266,8 @@ function calculateSubtotalGeneral() {
   subtotalCells.forEach(subtotalCell => {
     subtotalGeneral += parseFloat(subtotalCell.textContent);
   });
-  return subtotalGeneral;
+  subtotalGeneral = subtotalGeneral.toFixed(2);
+  return parseFloat(subtotalGeneral);
 }
 
 // Función para calcular el costo de envío
