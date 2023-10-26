@@ -1,5 +1,13 @@
 const apiUrl = "https://japceibal.github.io/emercado-api/user_cart/25801.json";
 
+function convertUYUtoUSD(amount, currency) {
+  if (currency === "UYU") {
+    return amount / 40;
+  } else {
+    return amount;
+  }
+}
+
 // Realizar la solicitud a la URL
 fetch(apiUrl)
   .then(response => response.json())
@@ -32,8 +40,9 @@ fetch(apiUrl)
 
       // Agregar un atributo "id" al input
       quantityInput.id = `quantityInput_${article.productId}`;
+      quantityInput.min = 1;
       quantityInput.addEventListener("input", (e) => {
-        updateSubtotal(article.unitCost, e.target.value === '' ? 0 : parseInt(quantityInput.value), subtotalCell);
+        updateSubtotal(article.unitCost, e.target.value === '' ? 1 : parseInt(quantityInput.value), subtotalCell);
         updateTotal();
       });
       quantityCell.appendChild(quantityInput);
@@ -104,10 +113,18 @@ fetch(apiUrl)
 
     // Recupera los IDs de productos del localStorage
     const cartProductIds = JSON.parse(localStorage.getItem("cartProductIds")) || [];
+    const groupedProductsId = {};
+    cartProductIds.forEach((productId) => {
+      if (groupedProductsId[productId]) {
+        groupedProductsId[productId] += 1;
+      } else {
+        groupedProductsId[productId] = 1;
+      }
+    });
 
     // Itera a través de los IDs de productos y agrega filas a la tabla
-    cartProductIds.forEach(productId => {
-      // Realiza una solicitud AJAX para obtener los detalles del producto
+    Object.keys(groupedProductsId).forEach(productId => {
+      // Realiza una solicitud AJAX para obtener los detalles del producto y su cantidad
       fetch(`https://japceibal.github.io/emercado-api/products/${productId}.json`)
         .then(response => {
           if (!response.ok) {
@@ -126,31 +143,33 @@ fetch(apiUrl)
           nameCell.textContent = product.name;
 
           const costCell = document.createElement("td");
-          costCell.textContent = product.cost;
+          costCell.textContent = convertUYUtoUSD(product.cost, product.currency);
 
           const quantityCell = document.createElement("td");
           const quantityInput = document.createElement("input");
           quantityInput.type = "number";
 
-          // Establecer el valor inicial en "1"
-          quantityInput.value = 1;
-
+          // Establece que el valor de la cantidad no sea menor a 1, y si el input está vacío que se mantenga con el precio de una unidad
+          quantityInput.value = groupedProductsId[productId];
+          quantityInput.min = 1;
           quantityInput.addEventListener("input", (e) => {
-            // Actualiza el subtotal utilizando la cantidad del producto actual
-            updateSubtotal(product.cost, e.target.value === '' ? 0 : parseInt(quantityInput.value), subtotalCell);
+            // Actualiza el subtotal utilizando la cantidad del producto actual y NO permite escribir ni letras ni números negativos en el input (en caso de querer poner -4 la cantidad que se verá reflejada será siempre 1, lo mismo con cualquier otro caracter)
+            if (isNaN(parseInt(quantityInput.value)) || parseInt(quantityInput.value) < 1) {
+              quantityInput.value = 1;
+            }
+            updateSubtotal(convertUYUtoUSD(product.cost, product.currency), e.target.value === '' ? 1 : parseInt(quantityInput.value), subtotalCell);
             updateTotal();
           });
 
           quantityCell.appendChild(quantityInput);
 
           const currencyCell = document.createElement("td");
-          currencyCell.textContent = product.currency;
+          currencyCell.textContent = "USD";
 
           const subtotalCell = document.createElement("td");
           // Agregar la clase "subtotal" a las celdas de subtotal
           subtotalCell.classList.add("subtotal");
 
-          updateSubtotal(product.cost, parseInt(quantityInput.value), subtotalCell);
           totalCost += product.cost * 1; // Inicialmente, la cantidad es 1
 
           newRow.appendChild(imageCell);
@@ -161,6 +180,7 @@ fetch(apiUrl)
           newRow.appendChild(subtotalCell);
 
           tableBody.appendChild(newRow);
+          updateSubtotal(convertUYUtoUSD(product.cost, product.currency), parseInt(quantityInput.value), subtotalCell);
 
           // Agregar un botón de eliminación
           const deleteButtonCell = document.createElement("td");
@@ -206,7 +226,7 @@ fetch(apiUrl)
         });
     });
 
-    totalCell.textContent = ` ${totalCost}`;
+    /*totalCell.textContent = ` ${totalCost}`;*/
 
     // Función para actualizar el subtotal de un producto
     function updateSubtotal(cost, count, subtotalCell) {
@@ -225,7 +245,10 @@ fetch(apiUrl)
 
       subtotalCells.forEach(subtotalCell => {
         newTotal += parseFloat(subtotalCell.textContent);
+        console.log(parseFloat(subtotalCell.textContent));
       });
+
+      console.log("acá pija mathi tkm");
 
       totalCell.textContent = ` ${newTotal.toFixed(2)}`;
       updateValues(); // Actualiza los valores de subtotal, costo de envío y total
