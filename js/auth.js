@@ -46,6 +46,9 @@ function createDropdown() {
       });
       dropdownMenu.appendChild(drop4);
 
+      // Establece el nombre de usuario (E-mail)
+      const usernameField = document.getElementById("username");
+      usernameField.value = savedUsername;
 
       dropdownContainer.appendChild(dropdownToggle);
       dropdownContainer.appendChild(dropdownMenu);
@@ -54,7 +57,6 @@ function createDropdown() {
     }
   }
 }
-
 document.addEventListener("DOMContentLoaded", function () {
   createDropdown();
 });
