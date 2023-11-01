@@ -38,58 +38,50 @@
   </nav>
   <main>
     <div class="container">
+      <br><br>
+      <div class="row">
+        <!-- Columna de la foto de perfil -->
 
-      <main>
-        <div class="container">     
-          <h2>Perfil de Usuario</h2>
-          <input type="file" id="fileInput">
-    <br>
-    <img src="img/img_perfil.png" id="profileImage" width="200" height="200">
-    
-    <script src="script.js"></script>
+        <!-- Columna de los datos del usuario -->
+        <div class="col-lg-6">
+          <h2>Datos del Usuario</h2>
           <form id="user-profile-form">
-
-            <div class="mb-3 row">
-              <label for="nombre" class="col-lg-2 col-md-3 col-sm-4 col-form-label">Primer Nombre*</label>
-              <div class="col-lg-4 col-md-9 col-sm-8">
-                <input type="text" class="form-control" id="nombre" name="nombre" required>
-              </div>
+            <div class="mb-3">
+              <label for="nombre" class="form-label">Primer Nombre*</label>
+              <input type="text" class="form-control" id="nombre" name="nombre" required>
             </div>
-            <div class="mb-3 row">
-              <label for="segundo-nombre" class="col-lg-2 col-md-3 col-sm-4 col-form-label">Segundo Nombre</label>
-              <div class="col-lg-4 col-md-9 col-sm-8">
-                <input type="text" class="form-control" id="segundo-nombre" name="segundo-nombre">
-              </div>
+            <div class="mb-3">
+              <label for="segundo-nombre" class="form-label">Segundo Nombre</label>
+              <input type="text" class="form-control" id="segundo-nombre" name="segundo-nombre">
             </div>
-            <div class="mb-3 row">
-              <label for="apellido" class="col-lg-2 col-md-3 col-sm-4 col-form-label">Primer Apellido*</label>
-              <div class="col-lg-4 col-md-9 col-sm-8">
-                <input type="text" class="form-control" id="apellido" name="apellido" required>
-              </div>
+            <div class="mb-3">
+              <label for="apellido" class="form-label">Primer Apellido*</label>
+              <input type="text" class="form-control" id="apellido" name="apellido" required>
             </div>
-            <div class="mb-3 row">
-              <label for="segundo-apellido" class="col-lg-2 col-md-3 col-sm-4 col-form-label">Segundo Apellido</label>
-              <div class="col-lg-4 col-md-9 col-sm-8">
-                <input type="text" class="form-control" id="segundo-apellido" name="segundo-apellido">
-              </div>
+            <div class="mb-3">
+              <label for="segundo-apellido" class="form-label">Segundo Apellido</label>
+              <input type="text" class="form-control" id="segundo-apellido" name="segundo-apellido">
             </div>
-            <div class="mb-3 row">
-              <label for="username" class="col-lg-2 col-md-3 col-sm-4 col-form-label">Nombre de Usuario (E-mail)</label>
-              <div class="col-lg-4 col-md-9 col-sm-8">
-                <input type="text" class="form-control" id="username" name="username" readonly>
-              </div>
+            <div class="mb-3">
+              <label for="username" class="form-label">Nombre de Usuario (E-mail)</label>
+              <input type="text" class="form-control" id="username" name="username" readonly>
             </div>
-            <div class="mb-3 row">
-              <label for="telefono" class="col-lg-2 col-md-3 col-sm-4 col-form-label" >Teléfono de Contacto*</label>
-              <div class="col-lg-4 col-md-9 col-sm-8">
-                <input type="tel" class="form-control" id="telefono" name="telefono" required>
-              </div>
+            <div class="mb-3">
+              <label for="telefono" class="form-label">Teléfono de Contacto*</label>
+              <input type="tel" class="form-control" id="telefono" name="telefono" required>
             </div>
             <button type="submit" class="btn btn-primary">Guardar Cambios</button>
           </form>
-          
+        </div>
+        <div class="col-lg-3">
+          <h2>Foto de Perfil</h2>
+          <img src="img/img_perfil.png" id="profileImage" class="img-fluid" alt="Foto de Perfil">
+          <input type="file" id="fileInput" class="mt-3">
+        </div>
+      </div>
     </div>
   </main>
+  
   <footer class="text-muted">
     <div class="container">
       <p class="float-end">
@@ -99,6 +91,7 @@
       </p>
     </div>
   </footer>
+  <script src="script.js"></script>
   <script src="js/bootstrap.bundle.min.js"></script>
   <script src="js/init.js"></script>
   <script src="js/my-profile.js"></script>
