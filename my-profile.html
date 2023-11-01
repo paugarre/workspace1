@@ -43,44 +43,56 @@
         <div class="container">     
           <h2>Perfil de Usuario</h2>
           <form id="user-profile-form">
-            <div class="mb-3 row">
-              <label for="nombre" class="col-lg-2 col-md-3 col-sm-4 col-form-label">Nombre</label>
-              <div class="col-lg-4 col-md-9 col-sm-8">
-                <input type="text" class="form-control" id="nombre" name="nombre" required>
+            <div class="container">
+              <div class="mb-3 row">
+                <label for="nombre" class="col-lg-2 col-md-3 col-sm-4 col-form-label">Nombre*</label>
+                <div class="col-lg-4 col-md-9 col-sm-8">
+                  <input type="text" class="form-control" id="nombre" name="nombre" required>
+                </div>
+              </div>
+              <div class="mb-3 row">
+                <label for="segundo-nombre" class="col-lg-2 col-md-3 col-sm-4 col-form-label">Segundo Nombre</label>
+                <div class="col-lg-4 col-md-9 col-sm-8">
+                  <input type="text" class="form-control" id="segundo-nombre" name="segundo-nombre">
+                </div>
+              </div>
+              <div class="mb-3 row">
+                <label for="apellido" class="col-lg-2 col-md-3 col-sm-4 col-form-label">Apellido*</label>
+                <div class="col-lg-4 col-md-9 col-sm-8">
+                  <input type="text" class ="form-control" id="apellido" name="apellido" required>
+                </div>
+              </div>
+              <div class="mb-3 row">
+                <label for="segundo-apellido" class="col-lg-2 col-md-3 col-sm-4 col-form-label">Segundo Apellido</label>
+                <div class="col-lg-4 col-md-9 col-sm-8">
+                  <input type="text" class="form-control" id="segundo-apellido" name="segundo-apellido">
+                </div>
+              </div>
+              <div class="mb-3 row">
+                <label for="username" class="col-lg-2 col-md-3 col-sm-4 col-form-label">E-mail*</label>
+                <div class="col-lg-4 col-md-9 col-sm-8">
+                  <input type="text" class="form-control" id="username" name="username" readonly>
+                </div>
+              </div>
+              <div class="mb-3 row">
+                <label for="telefono" class="col-lg-2 col-md-3 col-sm-4 col-form-label">Teléfono de Contacto</label>
+                <div class="col-lg-4 col-md-9 col-sm-8">
+                  <input type="tel" class="form-control" id="telefono" name="telefono">
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-12">
+                  <button type="button" class="btn btn-primary" id="guardar-button">Guardar Cambios</button>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-12">
+                  <div id="error-message" style="display: none; color: red;"></div>
+                </div>
               </div>
             </div>
-            <div class="mb-3 row">
-              <label for="segundo-nombre" class="col-lg-2 col-md-3 col-sm-4 col-form-label">Segundo Nombre</label>
-              <div class="col-lg-4 col-md-9 col-sm-8">
-                <input type="text" class="form-control" id="segundo-nombre" name="segundo-nombre">
-              </div>
-            </div>
-            <div class="mb-3 row">
-              <label for="apellido" class="col-lg-2 col-md-3 col-sm-4 col-form-label">Apellido</label>
-              <div class="col-lg-4 col-md-9 col-sm-8">
-                <input type="text" class="form-control" id="apellido" name="apellido" required>
-              </div>
-            </div>
-            <div class="mb-3 row">
-              <label for="segundo-apellido" class="col-lg-2 col-md-3 col-sm-4 col-form-label">Segundo Apellido</label>
-              <div class="col-lg-4 col-md-9 col-sm-8">
-                <input type="text" class="form-control" id="segundo-apellido" name="segundo-apellido">
-              </div>
-            </div>
-            <div class="mb-3 row">
-              <label for="username" class="col-lg-2 col-md-3 col-sm-4 col-form-label">Nombre de Usuario (E-mail)</label>
-              <div class="col-lg-4 col-md-9 col-sm-8">
-                <input type="text" class="form-control" id="username" name="username" readonly>
-              </div>
-            </div>
-            <div class="mb-3 row">
-              <label for="telefono" class="col-lg-2 col-md-3 col-sm-4 col-form-label">Teléfono de Contacto</label>
-              <div class="col-lg-4 col-md-9 col-sm-8">
-                <input type="tel" class="form-control" id="telefono" name="telefono">
-              </div>
-            </div>
-            <button type="submit" class="btn btn-primary">Guardar Cambios</button>
           </form>
+          
     </div>
   </main>
   <footer class="text-muted">
