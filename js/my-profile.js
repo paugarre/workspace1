@@ -20,6 +20,13 @@ document.addEventListener("DOMContentLoaded", function () {
       telefonoInput.value = userProfileData.telefono;
     }
   
+   const profileImage = document.getElementById('profileImage');
+   
+    // Verifica si la imagen de perfil está en el almacenamiento local
+    if (localStorage.getItem('userProfileImage')) {
+      profileImage.src = localStorage.getItem('userProfileImage');
+  }
+
     // Manejar la validación y el evento de guardar cambios
     userProfileForm.addEventListener("submit", function (event) {
       event.preventDefault();
@@ -41,7 +48,17 @@ document.addEventListener("DOMContentLoaded", function () {
       };
   
       localStorage.setItem("userProfile", JSON.stringify(userProfileData));
-      alert("Datos guardados en el almacenamiento local.");
+     
+       // Guardar la imagen de perfil si está presente
+       if (profileImage.src !== '' && profileImage.src !== 'img/img_perfil.png') {
+        localStorage.setItem('userProfileImage', profileImage.src);
+    } else {
+        localStorage.removeItem('userProfileImage'); // Si no hay imagen, eliminar del almacenamiento local
+    }
+
+    alert("Datos y/o imagen guardados en el almacenamiento local.");
+});
     });
-  });
   
+  
+ 
