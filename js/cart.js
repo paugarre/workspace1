@@ -329,8 +329,11 @@ function handlePaymentMethodChange() {
 }
 
 // Agregar un controlador de eventos para el cambio de elementos de radio
-const paymentMethodRadios = document.querySelectorAll("input[name='paymentMethod']");
-const paymentMethodLabel = document.getElementById("paymentMethodLabel");
+creditCardRadio.addEventListener('change', handlePaymentMethodChange);
+bankTransferRadio.addEventListener('change', handlePaymentMethodChange);
+
+handlePaymentMethodChange();
+
 
 paymentMethodRadios.forEach(radio => {
   radio.addEventListener("change", (e) => {
