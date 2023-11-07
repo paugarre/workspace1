@@ -33,30 +33,34 @@
     </div>
   </nav>
 
-  <main class="container mt-4">
-    <h1 class="text-center">Carrito de Compras</h1>
+  <main class="container mt-5">
+    <h1 class="text-center mb-4">Carrito de Compras</h1>
+  
+    <div class="table-responsive">
+      <table class="table align-middle">
+        <thead class="table-light">
+          <tr>
+            <th>Imagen</th>
+            <th>Nombre del Producto</th>
+            <th>Costo</th>
+            <th>Cantidad</th>
+            <th>Moneda</th>
+            <th>Subtotal</th>
+          </tr>
+        </thead>
+        <tbody id="product-table-body">
+          <!-- Filas de productos se agregarán aquí -->
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="5" class="text-end">Total:</td>
+            <td id="total"></td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
 
-    <table class="table">
-      <thead>
-        <tr>
-          <th>Imagen</th>
-          <th>Nombre del Producto</th>
-          <th>Costo</th>
-          <th>Cantidad</th>
-          <th>Moneda</th>
-          <th>Subtotal</th>
-        </tr>
-      </thead>
-      <tbody id="product-table-body">
-        <!-- Filas de productos se agregarán aquí -->
-      </tbody>
-      <tr>
-        <td colspan="5"></td>
-        <td id="total"></td>
-      </tr>
-    </table>
-
-    <div class="row mt-4">
+    <div class="row mt-4 gx-3">
       <div class="col-md-6">
         <h3>Selección de Envío</h3>
         <div class="form-check">
@@ -101,38 +105,35 @@
         <div class="error-message" id="corner-error"></div>
       </div>
     </div>
+    
     </div>
     <hr>
     <br>
     <!-- Subtotal general -->
-    <h3>Costo</h3>
-    <div id="subtotal-general">
-      Subtotal General: <span id="subtotal-amount">USD0</span>
+    <div class="row justify-content-between mt-4">
+      <div class="col-md-4">
+        <h3>Costo</h3>
+        <p id="subtotal-general">Subtotal General: <span id="subtotal-amount">USD0</span></p>
+        <p id="shipping-cost">Costo de Envío: <span id="shipping-amount">USD0</span></p>
+        <p id="total-to-pay">Total a Pagar($): <span id="total-amount">USD0</span></p>
+      </div>
+      <div class="col-md-4 text-md-end">
+        <h3>Forma de pago</h3>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#paymentModal">Seleccionar</button>
+      </div>
     </div>
-
-    <!-- Costo de envío -->
-    <div id="shipping-cost">
-      Costo de Envío: <span id="shipping-amount">USD0</span>
-    </div>
-
-    <!-- Total a pagar -->
-    <div id="total-to-pay">
-      Total a Pagar($): <span id="total-amount">USD0</span>
-    </div>
-    <hr>
-    <br>
-    <h3>Forma de pago</h3>
-    <!-- Botón para abrir el modal -->
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-      data-bs-target="#paymentModal">Seleccionar</button>
     <!-- Modal -->
 
     <div class="modal fade" id="paymentModal" tabindex="-1" aria-labelledby="paymentModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="paymentModalLabel">Seleccione una forma de pago</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            <div class="modal-header">
+              <h5 class="modal-title" id="paymentModalLabel">Seleccione una forma de pago</h5>
+              
+              
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+          </div>
           </div>
           <div class="modal-body">
             <form>

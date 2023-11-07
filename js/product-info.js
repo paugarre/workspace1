@@ -15,55 +15,35 @@ async function fetchProductDetails(productId) {
     // Mostrar los detalles del producto en la página
     const productDetailsContainer = document.getElementById('productDetails');
     productDetailsContainer.innerHTML = `
-      <br>
-      <h2>${productDetails.name}</h2>
-      <hr>
-      <p>Precio: ${productDetails.currency} ${productDetails.cost}</p>
-      <p>Descripción: ${productDetails.description}</p>
-      <p>Categoría: ${productDetails.category}</p>
-      <p>Cantidad vendida: ${productDetails.soldCount}</p>
+      <div class="card mb-3">
+        <div class="card-body">
+          <h2 class="card-title">${productDetails.name}</h2>
+          <hr>
+          <p class="card-text"><strong>Precio:</strong> ${productDetails.currency} ${productDetails.cost}</p>
+          <p class="card-text"><strong>Descripción:</strong> ${productDetails.description}</p>
+          <p class="card-text"><strong>Categoría:</strong> ${productDetails.category}</p>
+          <p class="card-text"><strong>Cantidad vendida:</strong> ${productDetails.soldCount}</p>
+        </div>
+      </div>
     `;
 
     const productImagesContainer = document.getElementById('productImages');
+    productImagesContainer.className = 'carousel slide'; // Asegurarse de que el contenedor tiene las clases de carrusel de Bootstrap
+    productImagesContainer.setAttribute('data-bs-ride', 'carousel');
     productImagesContainer.innerHTML = '';
 
-    // Crear un elemento div para el carrusel
-    const carouselDiv = document.createElement('div');
-    carouselDiv.className = 'carousel slide'; // Agregar clase para el carrusel
-    carouselDiv.setAttribute('data-bs-ride', 'carousel'); // Activar la funcionalidad de carrusel
+    const carouselIndicators = document.createElement('ol');
+    carouselIndicators.className = 'carousel-indicators';
 
-    // Crear el carrusel interno
     const carouselInner = document.createElement('div');
     carouselInner.className = 'carousel-inner';
 
     productDetails.images.forEach((imageSrc, index) => {
-      // Crear un contenedor para cada imagen del carrusel
       const carouselItem = document.createElement('div');
-      carouselItem.className = 'carousel-item';
-
-      if (index === 0) {
-        carouselItem.classList.add('active'); // Establecer la primera imagen como activa
-      }
-
-      // Crear un elemento de imagen
-      const imageElement = document.createElement('img');
-      imageElement.src = imageSrc;
-      imageElement.alt = productDetails.name;
-
-      // Agregar la imagen al contenedor del carrusel
-      carouselItem.appendChild(imageElement);
-
-      // Agregar el contenedor del carrusel al carrusel interno
+      carouselItem.className = `carousel-item ${index === 0 ? 'active' : ''}`;
+      carouselItem.innerHTML = `<img src="${imageSrc}" class="d-block w-100" alt="${productDetails.name}">`;
       carouselInner.appendChild(carouselItem);
-    });
 
-    // Agregar el carrusel interno al div del carrusel
-    carouselDiv.appendChild(carouselInner);
-
-    // Agregar los indicadores (puntos) para el carrusel
-    const carouselIndicators = document.createElement('ol');
-    carouselIndicators.className = 'carousel-indicators';
-    productDetails.images.forEach((_, index) => {
       const indicator = document.createElement('li');
       indicator.setAttribute('data-bs-target', '#productImages');
       indicator.setAttribute('data-bs-slide-to', index.toString());
@@ -73,56 +53,58 @@ async function fetchProductDetails(productId) {
       carouselIndicators.appendChild(indicator);
     });
 
-    // Agregar los indicadores al div del carrusel
-    carouselDiv.appendChild(carouselIndicators);
+    productImagesContainer.appendChild(carouselIndicators);
+    productImagesContainer.appendChild(carouselInner);
 
-    // Agregar el div del carrusel al contenedor de imágenes
-    productImagesContainer.appendChild(carouselDiv);
+    // Agregar controles de carrusel si es necesario
+    // ...
 
     // Configurar el carrusel utilizando Bootstrap
-    new bootstrap.Carousel(carouselDiv);
+    new bootstrap.Carousel(productImagesContainer);
 
     // Agregar productos relacionados
     const prodRel = document.getElementById('productosRelacionados');
+    prodRel.className = 'row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3'; // Grilla con 1, 2 o 3 columnas dependiendo del tamaño de la pantalla
     prodRel.innerHTML = '';
+    
     productDetails.relatedProducts.forEach((proR) => {
-      // Crear un contenedor para cada producto relacionado
       const prodRelacionado = document.createElement('div');
-      prodRelacionado.className = 'prodR-container'; // Agregar una clase para aplicar estilos
-
-      // Crear un botón para el producto relacionado
+      prodRelacionado.className = 'col'; // Cada producto ocupará el espacio de una columna
+    
+      const card = document.createElement('div');
+      card.className = 'card h-100'; // Clase card de Bootstrap para la altura completa
+    
+      const cardBody = document.createElement('div');
+      cardBody.className = 'card-body d-flex flex-column'; // Clase card-body y flex para distribución del espacio
+    
       const botonProd = document.createElement('button');
-      botonProd.className = 'prodR-button'; // Agregar una clase para estilos de botón
-      botonProd.addEventListener('click', () => {
+      botonProd.className = 'btn btn-outline-primary w-100 mb-2'; // Clases de botón de Bootstrap
+      botonProd.onclick = () => {
         window.location.href = `product-info.html?id=${proR.id}`;
-      });
-
-      // Crear un elemento de imagen
+      };
+    
       const ProdR = document.createElement('img');
-      ProdR.className = 'imgPrR';
+      ProdR.className = 'card-img-top img-fluid'; // Clase para imágenes de tarjeta y responsivas
       ProdR.src = proR.image;
       ProdR.alt = proR.name;
-
-      // Agregar la imagen al botón
-      botonProd.appendChild(ProdR);
-
-      // Crear un elemento de texto para el nombre del producto
-      const nombreProdR = document.createElement('p');
+    
+      const nombreProdR = document.createElement('h5');
+      nombreProdR.className = 'card-title'; // Clase para el título de la tarjeta
       nombreProdR.textContent = proR.name;
-
-      // Agregar el nombre del producto al botón
-      botonProd.appendChild(nombreProdR);
-
-      // Agregar el botón al contenedor del producto relacionado
+    
+      cardBody.appendChild(nombreProdR);
+      card.appendChild(ProdR);
+      card.appendChild(cardBody);
+      botonProd.appendChild(card);
       prodRelacionado.appendChild(botonProd);
-
-      // Agregar el contenedor del producto relacionado al contenedor principal
       prodRel.appendChild(prodRelacionado);
     });
+    
   } catch (error) {
     console.error('Error:', error);
   }
 }
+
 
 // Función para cargar los comentarios del producto desde la API
 async function fetchProductComments(productId) {

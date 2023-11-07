@@ -31,59 +31,57 @@
           <li class="nav-item">
             <a class="nav-link" href="sell.html">Vender</a>
           </li>
-          <li class="nav-item">
-          </li>
         </ul>
       </div>
     </div>
   </nav>
+
   <main class="container">
+    <br><br>
     <div class="row">
-      <div class="col-md-8">
-        <!-- Contenedor para detalles del producto -->
-        <div id="productDetails">
+      <div class="col-lg-12 col-md-12">
+        <div id="productDetails" class="mb-3">
           <!-- Aquí se mostrarán los detalles del producto -->
         </div>
-        <!-- Contenedor para imágenes del producto -->
-        <div id="productImages" class="product-images mt-4">
-          <!-- Botón de imagen anterior -->
-          <a class="carousel-control-prev" href="#productImages" role="button" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Anterior</span>
-          </a>
-
-          <!-- Botón de imagen siguiente -->
-          <a class="carousel-control-next" href="#productImages" role="button" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Siguiente</span>
-          </a>
+        <div id="productImages" class="carousel slide" data-bs-ride="carousel">
+          <!-- Indicadores del carousel y elementos irán aquí -->
         </div>
       </div>
-      <button id="addToCart">Agregar al Carrito</button>
-      <!-- Contenedor de comentarios -->
-      <div id="commentsContainer" class="mt-4">
-        <!-- Aquí se mostrarán los comentarios -->
-      </div>
-      <br>
-      <div class="col-md-4 col-12" id="p0">
-        <!-- Formulario para agregar comentarios -->
-        <h3>Agregar Comentario</h3>
-        <div class="mb-3">
-          <label for="commentRating" class="form-label">Puntuación:</label>
-          <input type="number" id="commentRating" class="form-control" min="1" max="5" required>
+      <div class="col-lg-12 col-md-12">
+        <button id="addToCart" class="btn btn-primary w-100 mb-3">Agregar al Carrito</button>
+        <div id="commentsContainer" class="mb-3">
+          <!-- Aquí se mostrarán los comentarios -->
         </div>
-        <div class="mb-3">
-          <label for="commentDescription" class="form-label">Comentario:</label>
-          <textarea id="commentDescription" class="form-control" required></textarea>
+        <div>
+          <h3>Agregar Comentario</h3>
+          <div class="mb-3">
+            <label for="commentRating" class="form-label">Puntuación:</label>
+            <input type="number" id="commentRating" class="form-control" min="1" max="5" required>
+          </div>
+          <div class="mb-3">
+            <label for="commentDescription" class="form-label">Comentario:</label>
+            <textarea id="commentDescription" class="form-control" required></textarea>
+          </div>
+          <button id="submitComment" class="btn btn-primary w-100">Enviar Comentario</button>
         </div>
-        <button id="submitComment" class="btn btn-primary">Enviar Comentario</button>
       </div>
-      <div>
-        <h2>Productos Relacionados</h2>
-        <div id="productosRelacionados" class="prodR-button"></div>
+      <div class="col-12">
+        <h2 class="mt-5">Productos Relacionados</h2>
+        <div id="productosRelacionados" class="prodR-button">
+          <!-- Los productos relacionados irán aquí -->
+        </div>
       </div>
     </div>
   </main>
+
+  <div class="container">
+    <div class="row">
+      
+    </div>
+
+  </div>
+
+
   <footer class="text-muted">
     <div class="container">
       <p class="float-end">
