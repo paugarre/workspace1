@@ -327,14 +327,44 @@ function handlePaymentMethodChange() {
     bankAccount.disabled = true;
     creditCardNumber.disabled = false;
     creditCardExpiry.disabled = false;
-    creditCardCode.disabled = false;
+    creditCardCode.disabled = false;  
+
+    creditCardNumber.addEventListener('input', onlyNumbers);
+    creditCardExpiry.addEventListener('input', onlyNumbers);
+    creditCardCode.addEventListener('input', onlyNumbers);
+
   } else if (bankTransferRadio.checked) {
     // Si se selecciona "Transferencia Bancaria"
     creditCardNumber.disabled = true;
     creditCardExpiry.disabled = true;
     creditCardCode.disabled = true;
     bankAccount.disabled = false;
+
+    bankAccount.addEventListener('input', onlyNumbers);
+
+    creditCardNumber.removeEventListener('input', onlyNumbers);
+    creditCardExpiry.removeEventListener('input', onlyNumbers);
+    creditCardCode.removeEventListener('input', onlyNumbers);
   }
+}
+
+function onlyNumbers(event) {
+  const input = event.target;
+  input.value = input.value.replace(/\D/g, ''); // Reemplaza no números con cadena vacía
+}
+
+//Detalles fecha de vencimiento
+creditCardExpiry.addEventListener('input', formatCreditCardExpiry);
+
+function formatCreditCardExpiry(event) {
+  const input = event.target;
+  let value = input.value.replace(/\D/g, ''); // Eliminar no números
+
+  if (value.length > 2) {
+  
+    value = value.slice(0, 2) + "/" + value.slice(2, 6); // Barra y límite de números
+  }
+  input.value = value;
 }
 
 // Agregar un controlador de eventos para el cambio de elementos de radio
@@ -342,7 +372,6 @@ creditCardRadio.addEventListener('change', handlePaymentMethodChange);
 bankTransferRadio.addEventListener('change', handlePaymentMethodChange);
 
 handlePaymentMethodChange();
-
 
 paymentMethodRadios.forEach(radio => {
   radio.addEventListener("change", (e) => {
