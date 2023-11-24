@@ -310,7 +310,16 @@ shippingRadioButtons.forEach(radioButton => {
     updateValues();
   });
 });
+// Obtener todos los elementos de radio para métodos de pago
+const paymentMethodRadios = document.querySelectorAll("input[name='paymentMethod']");
 
+// Ahora, puedes usar paymentMethodRadios en tus eventos y funciones
+paymentMethodRadios.forEach(radio => {
+  radio.addEventListener("change", (e) => {
+    const selectedPaymentMethod = e.target.value;
+    paymentMethodLabel.textContent = `Forma de Pago: ${selectedPaymentMethod}`;
+  });
+});
 // Función para habilitar o deshabilitar los campos según la selección
 function handlePaymentMethodChange() {
   if (creditCardRadio.checked) {
