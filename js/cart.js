@@ -1,13 +1,5 @@
 const apiUrl = "https://japceibal.github.io/emercado-api/user_cart/25801.json";
 
-function convertUYUtoUSD(amount, currency) {
-  if (currency === "UYU") {
-    return amount / 40;
-  } else {
-    return amount;
-  }
-}
-
 // Realizar la solicitud a la URL
 fetch(apiUrl)
   .then(response => response.json())
@@ -133,7 +125,7 @@ fetch(apiUrl)
         .then(product => {
 
           // Aplica la conversión de moneda a USD si es necesario
-          const convertedCost = convertToUSD(product.cost, product.currency);
+          const convertedCost = convertUYUtoUSD(product.cost, product.currency);
 
           const newRow = document.createElement("tr");
 
@@ -226,16 +218,14 @@ fetch(apiUrl)
         });
     });
 
-    //funcion para convertir de Uyu a usd
-    function convertToUSD(amount, currency) {
+    function convertUYUtoUSD(amount, currency) {
       if (currency === "UYU") {
-        // Dividir la cantidad en UYU por el tipo de cambio (40)
         return amount / 40;
       } else {
-        // Si la moneda no es UYU, devolver la cantidad sin cambios
         return amount;
       }
     }
+
     // Función para actualizar el subtotal de un producto
     function updateSubtotal(cost, count, subtotalCell) {
       if (count >= 0) {
@@ -327,7 +317,7 @@ function handlePaymentMethodChange() {
     bankAccount.disabled = true;
     creditCardNumber.disabled = false;
     creditCardExpiry.disabled = false;
-    creditCardCode.disabled = false;  
+    creditCardCode.disabled = false;
 
     creditCardNumber.addEventListener('input', onlyNumbers);
     creditCardExpiry.addEventListener('input', onlyNumbers);
@@ -361,7 +351,7 @@ function formatCreditCardExpiry(event) {
   let value = input.value.replace(/\D/g, ''); // Eliminar no números
 
   if (value.length > 2) {
-  
+
     value = value.slice(0, 2) + "/" + value.slice(2, 6); // Barra y límite de números
   }
   input.value = value;

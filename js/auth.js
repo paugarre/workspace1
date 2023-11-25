@@ -50,11 +50,14 @@ function createDropdown() {
 
       navbarNav.appendChild(dropdownContainer);
     }
-         // Establece el nombre de usuario (E-mail)
-         const usernameField = document.getElementById("username");
-         usernameField.value = savedUsername;
+    // Establece el nombre de usuario (E-mail)
+    const usernameField = document.getElementById("username");
+    if (usernameField) {
+      usernameField.value = savedUsername;
+    }
   }
 }
+
 document.addEventListener("DOMContentLoaded", function () {
   createDropdown();
 });

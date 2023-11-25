@@ -66,32 +66,32 @@ async function fetchProductDetails(productId) {
     const prodRel = document.getElementById('productosRelacionados');
     prodRel.className = 'row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3'; // Grilla con 1, 2 o 3 columnas dependiendo del tamaño de la pantalla
     prodRel.innerHTML = '';
-    
+
     productDetails.relatedProducts.forEach((proR) => {
       const prodRelacionado = document.createElement('div');
       prodRelacionado.className = 'col'; // Cada producto ocupará el espacio de una columna
-    
+
       const card = document.createElement('div');
       card.className = 'card h-100'; // Clase card de Bootstrap para la altura completa
-    
+
       const cardBody = document.createElement('div');
       cardBody.className = 'card-body d-flex flex-column'; // Clase card-body y flex para distribución del espacio
-    
+
       const botonProd = document.createElement('button');
       botonProd.className = 'btn btn-outline-primary w-100 mb-2'; // Clases de botón de Bootstrap
       botonProd.onclick = () => {
         window.location.href = `product-info.html?id=${proR.id}`;
       };
-    
+
       const ProdR = document.createElement('img');
       ProdR.className = 'card-img-top img-fluid'; // Clase para imágenes de tarjeta y responsivas
       ProdR.src = proR.image;
       ProdR.alt = proR.name;
-    
+
       const nombreProdR = document.createElement('h5');
       nombreProdR.className = 'card-title'; // Clase para el título de la tarjeta
       nombreProdR.textContent = proR.name;
-    
+
       cardBody.appendChild(nombreProdR);
       card.appendChild(ProdR);
       card.appendChild(cardBody);
@@ -99,7 +99,7 @@ async function fetchProductDetails(productId) {
       prodRelacionado.appendChild(botonProd);
       prodRel.appendChild(prodRelacionado);
     });
-    
+
   } catch (error) {
     console.error('Error:', error);
   }
@@ -246,7 +246,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 const addToCartButton = document.getElementById("addToCart");
 
-addToCartButton.addEventListener("click", () => {
+addToCartButton?.addEventListener("click", () => {
   const productId = getProductIdFromURL();
 
   if (productId) {
