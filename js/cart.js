@@ -96,7 +96,7 @@ fetch(apiUrl)
 
       tableBody.appendChild(row);
 
-
+      updateTotal();
     });
     // Obtén la referencia a la tabla donde deseas mostrar los productos en cart.html
     const cartTableBody = document.getElementById("product-table-body");
